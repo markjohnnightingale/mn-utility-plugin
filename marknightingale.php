@@ -10,6 +10,8 @@ Author URI: http://marknightingale.net
 
 $dir = plugin_dir_path( __FILE__ );
 
+require $dir . 'includes/meta-box-helper.php';
+
 // Comment / decomment for slideshow
 require $dir . 'includes/slider.php';
 
@@ -21,6 +23,8 @@ require $dir . 'includes/utilities.php';
 
 // Comment / decomment for breadcrumb
 require $dir . 'includes/breadcrumb.php';
+
+
 
 
 
