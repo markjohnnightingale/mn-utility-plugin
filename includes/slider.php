@@ -25,7 +25,7 @@ function register_slider_type() {
 
     	register_post_type( 'slide', $args );
         
-        add_image_size('slider-size', 800, 500, true);
+        add_image_size('slider-size', 800, 600, true);
 }
 
 add_action('init', 'register_slider_type');
@@ -84,6 +84,9 @@ function slider_save_post_meta( $post_id, $post ) {
 
 
 
+
+
+
 /* Enqueue Javascript 
  * 
  */
@@ -95,10 +98,14 @@ function enqueue_slider_assets() {
 add_action( 'wp_enqueue_scripts', 'enqueue_slider_assets' );
 
 
+
+
+
 /* Build Slideshow 
  * 
+ * params $auto_init = true ; $framework String = '' (bootstrap|foundation) ; $slider_options Array = array();
  */
-function mn_slideshow() {
+function mn_slideshow( $auto_init = true, $slider_options = array() ) {
     $query = new WP_Query(
         array(
             'post_type' => 'slide',
@@ -116,6 +123,7 @@ function mn_slideshow() {
             
             $output .= '<div class="slide" id="slick_'. $i .'">';
             if (has_post_thumbnail()) {
+                $output .= '<div class="slider_image_container">';
                 if ( isset($post_meta['slider_url']) ) {
                     $output .= '<a href="'.$post_meta['slider_url'][0].'">';
                 }
@@ -125,8 +133,9 @@ function mn_slideshow() {
                 if ( isset($post_meta['slider_url']) ) {
                     $output .= '</a>';
                 }
+                $output .= '</div>';
             }
-            $output .= '<p class="title">';
+            $output .= '<div class="content"><p class="title">';
             if ( isset($post_meta['slider_url']) ) {
                 $output .= '<a href="'.$post_meta['slider_url'][0].'">';
             }
@@ -143,7 +152,7 @@ function mn_slideshow() {
             if ( isset($post_meta['slider_url']) ) {
                 $output .= '</a>';
             }
-            $output .= '</p>';
+            $output .= '</p></div>';
             
             
             $output .= '</div>';
@@ -152,12 +161,18 @@ function mn_slideshow() {
     }
     $output .= '</div>';
     
-    // Add starting script
-    $output .= "<script>
-        jQuery(document).ready(function($){
-            $('.slick').slick();
-            })
-        </script>";
+    if ($auto_init) {
+        // Encode slider options
+        $js_options = json_encode($slider_options);
+        
+        // Add starting script
+        $output .= "<script>
+            jQuery(document).ready(function($){
+                $('.slick').slick($js_options);
+                })
+            </script>";
+    }
+    
     
     wp_reset_query();
     return $output;

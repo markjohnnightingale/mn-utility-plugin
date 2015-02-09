@@ -22,7 +22,32 @@ function truncate( $string, $length = 50 ) {
     return $out;
 }
 
+/*
+ * Get flag for language of post 
+ * 
+ * Params : $post_id [optional]
+ * Returns : string
+*/
 
+function get_country_flag( $post_id = '' ) {
+    
+    if ($post_id == '') {
+        $post_id = get_the_ID();
+    }
+    
+    // Get langauge and display flag
+    $post_language_information = wpml_get_language_information( $post_id );
+    $url_prefix = plugins_url() . '/sitepress-multilingual-cms/res/flags/';
+    
+    switch ($post_language_information['locale']) {
+        case 'fr_FR': $flag_url = $url_prefix . 'fr.png'; break;
+        case 'de_DE': $flag_url = $url_prefix . 'de.png'; break;
+        case 'en_US': $flag_url = $url_prefix . 'en.png'; break;
+    }
+    
+    return '<img src="' . $flag_url . '" alt="Flag '. $post_language_information['locale'] .'" class="flag" />';
+    
+}
 
 
 
