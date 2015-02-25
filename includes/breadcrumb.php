@@ -10,7 +10,7 @@
 function mn_breadcrumb( $framework = '' ) {
     if ($framework = 'bootstrap') { ?>
         <ol class="breadcrumb">
-            <li class="<?php if (is_front_page()) { echo 'active'; }?>"><a href="<?php site_url();?>"><?php _e('Accueil', '_tk');?></a></li>
+            <li class="<?php if (is_front_page()) { echo 'active'; }?>"><a href="<?php site_url();?>"><?php _e('Home', '_tk');?></a></li>
             <?php if (!is_front_page()) :?>
         
                 <?php if (is_category()) : ?>
