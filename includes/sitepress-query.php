@@ -9,12 +9,40 @@
  */
 
 function query_pamina_posts( $options = array() ) {
+    // If query options contain a single category, get translations and search for all posts in all translated categories;
+    if (isset($options['cat'])) {
+        
+        // Initalise translated categories array
+        $translated_cats = array();
+
+        // Site languages
+        $langs = array('fr','de','en');
+
+        // For each language check if the translation of the category exists, if so, add to array of categories
+
+        foreach ($langs as $lang) {
+            if (icl_object_id($options['cat'], 'category', false, $lang)) {
+                array_push($translated_cats, intval(icl_object_id($options['cat'], 'category', false, $lang)));
+            }
+        }
+
+        // Unset category filter
+        unset($options['cat']);
+
+        // Unset category name filter
+        $options['category_name'] = '';
+
+        // Add translated categories filter
+        $options['category__in'] = $translated_cats;
+    }
+
+
     global $sitepress;
+    $current_lang = $sitepress->get_current_language();
     $sitepress->switch_lang('all');
     
         
     $query = new WP_Query( $options );
-    // wp_reset_query();
 
     // Initialise array of original post IDs
     $post_ids = array();
@@ -52,7 +80,7 @@ function query_pamina_posts( $options = array() ) {
     
     // Set language back to current language
     global $sitepress;
-    $sitepress->switch_lang(ICL_LANGUAGE_CODE);
+    $sitepress->switch_lang($current_lang);
     
     // Now we are all in the correct language, remove duplicates
     $translated_ids = array_unique($translated_ids);
