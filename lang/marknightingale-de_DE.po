@@ -1,0 +1,57 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Mark Nightingale v1\n"
+"POT-Creation-Date: 2015-02-25 15:18+0100\n"
+"PO-Revision-Date: 2015-02-25 15:22+0100\n"
+"Last-Translator: Mark Nightingale <hello@marknightingale.net>\n"
+"Language-Team: \n"
+"Language: de\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.7.4\n"
+"X-Poedit-Basepath: .\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Poedit-KeywordsList: _e;__\n"
+"X-Poedit-SearchPath-0: ..\n"
+
+#: ../includes/breadcrumb.php:13
+msgid "Home"
+msgstr ""
+
+#: ../includes/breadcrumb.php:46 ../includes/breadcrumb.php:48
+#: ../includes/breadcrumb.php:50
+msgid "Archive for"
+msgstr ""
+
+#: ../includes/breadcrumb.php:52
+msgid "News Archives"
+msgstr ""
+
+#: ../includes/breadcrumb.php:54
+msgid "Search Results"
+msgstr ""
+
+#: ../includes/slider.php:8
+msgid "Slides"
+msgstr ""
+
+#: ../includes/slider.php:9
+msgid "Slide"
+msgstr ""
+
+#: ../includes/slider.php:10
+msgid "Slideshow"
+msgstr ""
+
+#: ../includes/slider.php:52
+msgid "Slider Metadata"
+msgstr ""
+
+#: ../includes/slider.php:64
+msgid "URL"
+msgstr ""
+
+#: ../includes/slider.php:65
+msgid "The URL of the link for this slide"
+msgstr ""
