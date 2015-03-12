@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Mark Nightingale v1\n"
 "POT-Creation-Date: 2015-02-25 15:18+0100\n"
-"PO-Revision-Date: 2015-02-25 15:22+0100\n"
+"PO-Revision-Date: 2015-02-26 10:09+0100\n"
 "Last-Translator: Mark Nightingale <hello@marknightingale.net>\n"
 "Language-Team: \n"
 "Language: de\n"
@@ -17,41 +17,41 @@ msgstr ""
 
 #: ../includes/breadcrumb.php:13
 msgid "Home"
-msgstr ""
+msgstr "Startseite"
 
 #: ../includes/breadcrumb.php:46 ../includes/breadcrumb.php:48
 #: ../includes/breadcrumb.php:50
 msgid "Archive for"
-msgstr ""
+msgstr "Archivieren für"
 
 #: ../includes/breadcrumb.php:52
 msgid "News Archives"
-msgstr ""
+msgstr "Nachrichten Archive"
 
 #: ../includes/breadcrumb.php:54
 msgid "Search Results"
-msgstr ""
+msgstr "Suchergebnis"
 
 #: ../includes/slider.php:8
 msgid "Slides"
-msgstr ""
+msgstr "Dias"
 
 #: ../includes/slider.php:9
 msgid "Slide"
-msgstr ""
+msgstr "Dia"
 
 #: ../includes/slider.php:10
 msgid "Slideshow"
-msgstr ""
+msgstr "Diashow"
 
 #: ../includes/slider.php:52
 msgid "Slider Metadata"
-msgstr ""
+msgstr "Diashow Metadata"
 
 #: ../includes/slider.php:64
 msgid "URL"
-msgstr ""
+msgstr "URL"
 
 #: ../includes/slider.php:65
 msgid "The URL of the link for this slide"
-msgstr ""
+msgstr "Die URL der Links des Diashow"

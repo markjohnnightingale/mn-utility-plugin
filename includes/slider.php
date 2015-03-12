@@ -124,12 +124,24 @@ function mn_slideshow( $auto_init = true, $slider_options = array() ) {
             $output .= '<div class="slide" id="slick_'. $i .'">';
             if (has_post_thumbnail()) {
                 $output .= '<div class="slider_image_container">';
+
+                //  If there is a URL add a link over the entire image
                 if ( isset($post_meta['slider_url']) ) {
                     $output .= '<a href="'.$post_meta['slider_url'][0].'">';
                 }
-                $output .= get_the_post_thumbnail(get_the_ID(), "slider-size", array(
-                    'class' => "slider_image"
-                ));
+
+                // $output .= get_the_post_thumbnail(get_the_ID(), "slider-size", array(
+                //     'class' => "slider_image"
+                // ));
+
+                // Get slider image URL and display without height / width attributes
+                $image = wp_get_attachment_image_src( get_post_thumbnail_id( get_the_ID() ), 'slider-size' ); 
+
+                if ($image) {
+                    $output .= "<img src=".$image[0]." alt='Slider Image' title='".get_the_title()."' class='slider_image'/>";
+                }
+
+                // Close link if there is a URL
                 if ( isset($post_meta['slider_url']) ) {
                     $output .= '</a>';
                 }

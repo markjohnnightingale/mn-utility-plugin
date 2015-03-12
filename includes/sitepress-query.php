@@ -9,6 +9,8 @@
  */
 
 function query_pamina_posts( $options = array() ) {
+
+    // var_dump($options);
     // If query options contain a single category, get translations and search for all posts in all translated categories;
     if (isset($options['cat'])) {
         
@@ -24,6 +26,9 @@ function query_pamina_posts( $options = array() ) {
             if (icl_object_id($options['cat'], 'category', false, $lang)) {
                 array_push($translated_cats, intval(icl_object_id($options['cat'], 'category', false, $lang)));
             }
+        }
+        if (WP_DEBUG === true) {
+            echo '<pre><h3>Translated Cats</h3>';print_r($translated_cats);echo '</pre>';
         }
 
         // Unset category filter
@@ -52,7 +57,9 @@ function query_pamina_posts( $options = array() ) {
         
         array_push($post_ids, $post->ID);
     }
-    // echo "<pre> Pre-sort IDs"; print_r($post_ids); echo "</pre>";
+    if (WP_DEBUG == true) {
+        echo "<pre> Pre-sort IDs<br>"; print_r($post_ids); echo "</pre>";
+    }
     
     // Initialise array of translated IDs
     $translated_ids = array();
@@ -82,13 +89,26 @@ function query_pamina_posts( $options = array() ) {
     global $sitepress;
     $sitepress->switch_lang($current_lang);
     
-    // Now we are all in the correct language, remove duplicates
-    $translated_ids = array_unique($translated_ids);
-    // echo "<pre> post-sort IDs"; print_r($translated_ids); echo "</pre>";
+
+    if (!empty($translated_ids)) {
+        // Assuming there are posts
+
+
+        // Now we are all in the correct language, remove duplicates
+        $translated_ids = array_unique($translated_ids);
+        
+        if (WP_DEBUG == true) {
+           echo "<pre> post-sort IDs<br>"; print_r($translated_ids); echo "</pre>";
+        }
+        
+        // Now query all those posts from the DB.        
+        $translated_query = new WP_Query( array('post__in' => $translated_ids, 'suppress_filters' => true) );
+
+    } else {
+        // If there are no posts, force the query to return no results (hack to overcome the posts__in default behaviour of returning all posts)
+        $translated_query = new WP_Query( array('post__in' => array(0) ) );
+    }
     
-    // Now query all those posts from the DB. 
-    
-    $translated_query = new WP_Query( array('post__in' => $translated_ids, 'suppress_filters' => true) );
     return $translated_query;
 }
 
