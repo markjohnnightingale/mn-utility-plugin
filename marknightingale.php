@@ -15,7 +15,7 @@ function marknightingale_load_plugin_textdomain() {
     load_plugin_textdomain( 'marknightingale', FALSE, basename( dirname( __FILE__ ) ) . '/lang/' );
 }
 add_action( 'plugins_loaded', 'marknightingale_load_plugin_textdomain' );
-
+// New line to demo git
 
 
 
