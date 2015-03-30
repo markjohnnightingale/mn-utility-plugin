@@ -50,5 +50,20 @@ function get_country_flag( $post_id = '' ) {
 }
 
 
+// Get language selector with just language code
+function lockacademy_language_selector( $classes = ''){
+    $languages = icl_get_languages('skip_missing=0&orderby=code');
+    if(!empty($languages)){
+        echo '<ul id="lang_selector" class="'.$classes.'">';
+        foreach($languages as $l){
+            echo '<li>';
+            echo '<a href="'.$l['url'].'">';
+            echo ''.$l['language_code'].'';
+            echo '</a>';
+            echo '</li>';
+        }
+    }
+    echo '</ul>';
+}
 
 ?>

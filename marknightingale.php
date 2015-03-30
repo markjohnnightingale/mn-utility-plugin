@@ -15,7 +15,6 @@ function marknightingale_load_plugin_textdomain() {
     load_plugin_textdomain( 'marknightingale', FALSE, basename( dirname( __FILE__ ) ) . '/lang/' );
 }
 add_action( 'plugins_loaded', 'marknightingale_load_plugin_textdomain' );
-// New line to demo git
 
 
 
@@ -27,7 +26,7 @@ require $dir . 'includes/meta-box-helper.php';
 require $dir . 'includes/slider.php';
 
 // Comment / decoment for Panima Query
-require $dir . 'includes/sitepress-query.php';
+//require $dir . 'includes/sitepress-query.php';
 
 // Comment / decomment for utilities
 require $dir . 'includes/utilities.php';
@@ -35,6 +34,11 @@ require $dir . 'includes/utilities.php';
 // Comment / decomment for breadcrumb
 require $dir . 'includes/breadcrumb.php';
 
+// Comment / decomment for foundation menu walker
+require $dir . 'includes/foundation-walker.php';
+
+// Comment / decomment for wpml-appointments
+require $dir . '/includes/wpml-appointments.php';
 
 
 
