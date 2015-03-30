@@ -19,7 +19,7 @@ function mn_build_meta_box( $metabox ) {
             $output .= "<span class='description'>${field['desc']}</span>";
             break; 
             case 'checkbox':
-            $output .= "<p><label for='${field['id']}'>${field['label']}</label>";
+            $output .= "<p><label for='${field['id']}'>${field['label']}</label><br>";
             $output .= "<input type='checkbox' name='${field['id']}' id='${field['id']}' value='yes' ";
             if ( isset ( $meta ) ) $output .= checked( $meta, 'yes' ); 
             $output .= " />";
