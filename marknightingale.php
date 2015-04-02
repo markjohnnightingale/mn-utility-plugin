@@ -23,7 +23,7 @@ $dir = plugin_dir_path( __FILE__ );
 require $dir . 'includes/meta-box-helper.php';
 
 // Comment / decomment for slideshow
-require $dir . 'includes/slider.php';
+//require $dir . 'includes/slider.php';
 
 // Comment / decoment for Panima Query
 //require $dir . 'includes/sitepress-query.php';
@@ -39,6 +39,9 @@ require $dir . 'includes/foundation-walker.php';
 
 // Comment / decomment for wpml-appointments
 require $dir . '/includes/wpml-appointments.php';
+
+// Comment / decomment for FAQ custom post type
+require $dir . '/includes/faq.php';
 
 
 
