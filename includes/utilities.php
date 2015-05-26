@@ -67,4 +67,22 @@ function mn_language_selector( $classes = ''){
     echo '</ul>';
 }
 
+
+// Get ID from Slug
+function get_id_by_slug($page_slug) {
+    $page = get_page_by_path($page_slug);
+    if ($page) {
+        return $page->ID;
+    } else {
+        return null;
+    }
+}
+
+// Get Translated ID from Slug 
+function icl_get_page_id_by_slug($page_slug) {
+
+    return icl_object_id(get_id_by_slug($page_slug), 'page') ;
+    
+}
+
 ?>
