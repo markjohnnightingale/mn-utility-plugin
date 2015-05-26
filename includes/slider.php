@@ -12,8 +12,8 @@ function register_slider_type() {
 
     	$args = array(
     		'labels'             => $labels,
-    		'public'             => true,
-    		'publicly_queryable' => true,
+    		'public'             => false,
+    		'publicly_queryable' => false,
     		'show_ui'            => true,
     		'show_in_nav_menus'  => false,
     		'rewrite'            => array( 'slug' => 'slide' ),
