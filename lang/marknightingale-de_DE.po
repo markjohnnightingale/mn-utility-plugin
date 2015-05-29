@@ -1,15 +1,15 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Mark Nightingale v1\n"
-"POT-Creation-Date: 2015-02-25 15:18+0100\n"
-"PO-Revision-Date: 2015-02-26 10:09+0100\n"
+"POT-Creation-Date: 2015-05-29 16:47+0100\n"
+"PO-Revision-Date: 2015-05-29 16:50+0100\n"
 "Last-Translator: Mark Nightingale <hello@marknightingale.net>\n"
 "Language-Team: \n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.7.4\n"
+"X-Generator: Poedit 1.8.1\n"
 "X-Poedit-Basepath: .\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Poedit-KeywordsList: _e;__\n"
@@ -19,18 +19,38 @@ msgstr ""
 msgid "Home"
 msgstr "Startseite"
 
-#: ../includes/breadcrumb.php:46 ../includes/breadcrumb.php:48
-#: ../includes/breadcrumb.php:50
+#: ../includes/breadcrumb.php:49 ../includes/breadcrumb.php:51
+#: ../includes/breadcrumb.php:53
 msgid "Archive for"
 msgstr "Archivieren für"
 
-#: ../includes/breadcrumb.php:52
+#: ../includes/breadcrumb.php:55
 msgid "News Archives"
 msgstr "Nachrichten Archive"
 
-#: ../includes/breadcrumb.php:54
+#: ../includes/breadcrumb.php:57
 msgid "Search Results"
 msgstr "Suchergebnis"
+
+#: ../includes/faq.php:8 ../includes/faq.php:10
+msgid "FAQ"
+msgstr "FAQs"
+
+#: ../includes/faq.php:9
+msgid "Question"
+msgstr "Frage"
+
+#: ../includes/faq.php:51
+msgid "FAQ Metadata"
+msgstr "Frage-metadata"
+
+#: ../includes/faq.php:63
+msgid "Appear on Home"
+msgstr "An Startseite zeigen"
+
+#: ../includes/faq.php:64
+msgid "Check if you wish the FAQ to appear on the homepage"
+msgstr "Das Kästchen ankreuzen, um diese Frage an der Startseite sichtbar zu machen. "
 
 #: ../includes/slider.php:8
 msgid "Slides"
@@ -55,3 +75,7 @@ msgstr "URL"
 #: ../includes/slider.php:65
 msgid "The URL of the link for this slide"
 msgstr "Die URL der Links des Diashow"
+
+#: ../includes/utilities.php:86
+msgid "This post is also available in: "
+msgstr "Dies Artikel ist auch verfügbar auf : "
