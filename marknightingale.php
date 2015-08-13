@@ -43,6 +43,8 @@ require $dir . '/includes/wpml-appointments.php';
 // Comment / decomment for FAQ custom post type
 require $dir . '/includes/faq.php';
 
+// Add Room custom post type
+require $dir . '/includes/rooms.php';
 
 
 

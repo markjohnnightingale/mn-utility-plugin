@@ -55,9 +55,9 @@ function mn_save_meta_data( $post_id, $post, $metabox ) {
       foreach ($metabox['boxes'] as $field) {
           $old = get_post_meta($post_id, $field['id'], true);
           $new = $_POST[$field['id']];
-          if ($new && $new != $old) {
+          if ( isset($new) && $new != $old) {
               update_post_meta($post_id, $field['id'], $new);
-          } elseif ('' == $new && $old) {
+          } elseif ('' === $new && isset($old))  {
               delete_post_meta($post_id, $field['id'], $old);
           }
       } // end foreach  
