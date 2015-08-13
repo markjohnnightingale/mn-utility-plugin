@@ -30,10 +30,13 @@ function mn_breadcrumb( $framework = '' ) {
                         <?php 
                         $ancestors = get_post_ancestors(get_the_ID());
                         if (!empty( $ancestors )) {
+                            $ancestors = array_reverse($ancestors);
+                            $output = '';
                             foreach ($ancestors as $post_id) {
                                 $output .= '<li><a href="'.get_the_permalink($post_id).'">'.get_the_title($post_id).'</a></li>';
-                                echo $output;
+                                
                             }
+                            echo $output;
                         } ?>
                 
                     <?php endif;?>
