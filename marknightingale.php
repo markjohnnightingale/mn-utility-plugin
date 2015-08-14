@@ -46,6 +46,8 @@ require $dir . 'includes/utilities.php';
 // Comment / decomment for Testimonial custom post type
 require $dir . '/includes/testimonial.php';
 
+// Add Room custom post type
+require $dir . '/includes/rooms.php';
 
 
 
