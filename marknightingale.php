@@ -32,16 +32,19 @@ require $dir . 'includes/meta-box-helper.php';
 require $dir . 'includes/utilities.php';
 
 // Comment / decomment for breadcrumb
-require $dir . 'includes/breadcrumb.php';
+//require $dir . 'includes/breadcrumb.php';
 
 // Comment / decomment for foundation menu walker
-require $dir . 'includes/foundation-walker.php';
+//require $dir . 'includes/foundation-walker.php';
 
 // Comment / decomment for wpml-appointments
-require $dir . '/includes/wpml-appointments.php';
+//require $dir . '/includes/wpml-appointments.php';
 
 // Comment / decomment for FAQ custom post type
-require $dir . '/includes/faq.php';
+//require $dir . '/includes/faq.php';
+
+// Comment / decomment for Testimonial custom post type
+require $dir . '/includes/testimonial.php';
 
 
 
