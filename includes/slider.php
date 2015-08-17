@@ -20,7 +20,7 @@ function register_slider_type() {
     		'capability_type'    => 'post',
     		'has_archive'        => false,
     		'hierarchical'       => false,
-    		'supports'           => array( 'title', 'author', 'thumbnail', 'excerpt' )
+    		'supports'           => array( 'title', 'author', 'thumbnail', 'excerpt', 'editor' )
     	);
 
     	register_post_type( 'slide', $args );
