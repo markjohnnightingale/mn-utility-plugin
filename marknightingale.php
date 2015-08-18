@@ -50,4 +50,13 @@ require $dir . '/includes/testimonial.php';
 
 
 
+
+// Add Custom JS Utilities
+function enqueue_utility_js() {
+	wp_enqueue_script( 'mn_utility_js', plugin_dir_url( __FILE__ ) . '/includes/javascript_utilities.js', array('jquery'), '1.0.0', true );
+}
+add_action('wp_enqueue_scripts','enqueue_utility_js');
+
+
+
 ?>
