@@ -20,7 +20,7 @@ function register_faq_type() {
     		'capability_type'    => 'post',
     		'has_archive'        => false,
     		'hierarchical'       => false,
-    		'supports'           => array( 'title', 'author', 'thumbnail', 'editor' )
+    		'supports'           => array( 'title', 'author', 'thumbnail', 'editor', 'page-attributes' )
     	);
 
     	register_post_type( 'faq', $args );
