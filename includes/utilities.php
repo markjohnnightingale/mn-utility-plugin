@@ -56,7 +56,7 @@ function mn_language_selector( $classes = ''){
     if(!empty($languages)){
         echo '<ul id="lang_selector" class="'.$classes.'">';
         foreach($languages as $l){
-            if ($l['active']) $class = 'active';
+            if ($l['active']) { $class = 'active'; } else {$class = '';}
             echo '<li class="'.$class.'">';
             echo '<a href="'.$l['url'].'">';
             echo ''.$l['language_code'].'';
