@@ -20,12 +20,12 @@ function register_slider_type() {
     		'capability_type'    => 'post',
     		'has_archive'        => false,
     		'hierarchical'       => false,
-    		'supports'           => array( 'title', 'author', 'thumbnail', 'excerpt' )
+    		'supports'           => array( 'title', 'author', 'thumbnail', 'excerpt', 'editor' )
     	);
 
     	register_post_type( 'slide', $args );
         
-        add_image_size('slider-size', 800, 600, true);
+        add_image_size('slider-size', $config['slider']['image_size']['x'], $config['slider']['image_size']['y'], true);
 }
 
 add_action('init', 'register_slider_type');
@@ -145,9 +145,15 @@ function mn_slideshow( $auto_init = true, $slider_options = array() ) {
                 if ( isset($post_meta['slider_url']) ) {
                     $output .= '</a>';
                 }
-                $output .= '</div>';
+
+                if ( $config['slider']['has_overlay'] ) {
+                    // Add image overlay
+                    $output .= '<div class="color_overlay"></div>';
+                }
+                
+                $output .= '</div>'; // end slider_image_container
             }
-            $output .= '<div class="content"><p class="title">';
+            $output .= '<div class="content"><h3 class="title">';
             if ( isset($post_meta['slider_url']) ) {
                 $output .= '<a href="'.$post_meta['slider_url'][0].'">';
             }
@@ -155,19 +161,41 @@ function mn_slideshow( $auto_init = true, $slider_options = array() ) {
             if ( isset($post_meta['slider_url']) ) {
                 $output .= '</a>';
             }
-            $output .= '</p>';
-            $output .= '<p class="excerpt">';
-            if ( isset($post_meta['slider_url']) ) {
-                $output .= '<a href="'.$post_meta['slider_url'][0].'">';
+            $output .= '</h3>';
+
+            if ( $config['slider']['content_type'] = 'content' ) {
+
+                //Display content
+                $output .= '<div class="full_content">';
+                if ( isset($post_meta['slider_url']) ) {
+                    $output .= '<a href="'.$post_meta['slider_url'][0].'">';
+                }
+                $content = apply_filters( 'the_content', get_the_content() );
+                $content = str_replace( ']]>', ']]&gt;', $content );
+                $output .= $content;
+                if ( isset($post_meta['slider_url']) ) {
+                    $output .= '</a>';
+                }
+                $output .= '</div>';
+
+            } else {
+
+                // Display excerpt
+                $output .= '<div class="excerpt">';
+                if ( isset($post_meta['slider_url']) ) {
+                    $output .= '<a href="'.$post_meta['slider_url'][0].'">';
+                }
+                $output .= get_the_excerpt();
+                if ( isset($post_meta['slider_url']) ) {
+                    $output .= '</a>';
+                }
+                $output .= '</div>';
+
             }
-            $output .= get_the_excerpt();
-            if ( isset($post_meta['slider_url']) ) {
-                $output .= '</a>';
-            }
-            $output .= '</p></div>';
             
             
-            $output .= '</div>';
+            
+            $output .= '</div></div>';
             $i++;
         }
     }

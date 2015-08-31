@@ -67,6 +67,45 @@ function mn_language_selector( $classes = ''){
     echo '</ul>';
 }
 
+// Get language selector with just language code compatible with a foundation nav menu
+function mn_full_foundation_language_button( $classes = ''){
+    $languages = icl_get_languages('skip_missing=0&orderby=code');
+    if(!empty($languages)){
+        echo '<button href="#" data-dropdown="languages" aria-controls="languages" aria-expanded="false" class="button dropdown '.$classes.' ">'.ICL_LANGUAGE_NAME.'</button>';
+        echo '<ul class="f-dropdown" data-dropdown-content id="languages" aria-hidden="true">';
+        foreach($languages as $l){
+            if ( $l['active'] == '1') { $class = 'active'; } else {$class = '';}
+            echo '<li class="'.$class.'">';
+            echo '<a href="'.$l['url'].'">';
+            echo ''.$l['native_name'].'';
+            echo '</a>';
+            echo '</li>';
+        }
+        echo '</ul>'; // End dropdown
+    }
+}
+
+// Get language selector with just language code compatible with a foundation button
+function mn_full_foundation_language_nav( $classes = '' ){
+    $languages = icl_get_languages('skip_missing=0&orderby=code');
+    if(!empty($languages)){
+        echo '<button id="lang_selector" class="'.$classes.' ">';
+            echo '<li class="has-dropdown"><a href="#">'.ICL_LANGUAGE_NAME.'</a>';
+            echo '<ul class="dropdown">';
+            foreach($languages as $l){
+                if ( $l['active'] == '1') { $class = 'active'; } else {$class = '';}
+                echo '<li class="'.$class.'">';
+                echo '<a href="'.$l['url'].'">';
+                echo ''.$l['native_name'].'';
+                echo '</a>';
+                echo '</li>';
+            }
+            echo '</ul></li>'; // End dropdown
+    }
+    echo '</ul>';
+}
+
+
 
 // Get ID from Slug
 function get_id_by_slug($page_slug) {
@@ -84,5 +123,12 @@ function icl_get_page_id_by_slug($page_slug) {
     return icl_object_id(get_id_by_slug($page_slug), 'page') ;
     
 }
+
+
+// Add Custom JS Utilities
+function enqueue_utility_js() {
+    wp_enqueue_script( 'mn_utility_js', plugin_dir_url( __FILE__ ) . '/includes/javascript_utilities.js', array('jquery'), '1.0.0', true );
+}
+add_action('wp_enqueue_scripts','enqueue_utility_js');
 
 ?>

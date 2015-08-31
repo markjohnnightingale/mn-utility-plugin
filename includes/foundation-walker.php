@@ -7,7 +7,7 @@ class F5_TOP_BAR_WALKER extends Walker_Nav_Menu
     function display_element( $element, &$children_elements, $max_depth, $depth=0, $args, &$output ) 
     {
         $element->has_children = !empty( $children_elements[$element->ID] );
-         
+        // print "<pre> Test".$children_elements[$element->ID]."</pre>";  
         if(!empty($element->classes)){
             $element->classes[] = ( $element->current || $element->current_item_ancestor ) ? 'active' : '';
             $element->classes[] = ( $element->has_children ) ? 'has-dropdown' : '';           
