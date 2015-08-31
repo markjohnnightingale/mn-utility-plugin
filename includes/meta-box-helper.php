@@ -16,13 +16,11 @@ function mn_build_meta_box( $metabox ) {
             case 'text': 
             $output .= "<p><label for='${field['id']}'>${field['label']}</label>";
             $output .= "<input class='widefat' type='text' name='${field['id']}' id='${field['id']}' value='$meta' size=30/>";
-            $output .= "<span class='description'>${field['desc']}</span>";
+            $output .= "<span class='description'>${field['desc']}</span></p>";
             break; 
             case 'checkbox':
             $output .= "<p><label for='${field['id']}'>${field['label']}</label><br>";
-            $output .= "<input type='checkbox' name='${field['id']}' id='${field['id']}' value='yes' ";
-            if ( isset ( $meta ) ) $output .= checked( $meta, 'yes' ); 
-            $output .= " />";
+            $output .= "<input type='checkbox' name='${field['id']}' id='${field['id']}' value='yes' ". checked( $meta, 'yes', false ) ." /> ";
             $output .= "<span class='description'>${field['desc']}</span>";
             break;
 
@@ -57,8 +55,8 @@ function mn_save_meta_data( $post_id, $post, $metabox ) {
           $new = $_POST[$field['id']];
           if ( isset($new) && $new != $old) {
               update_post_meta($post_id, $field['id'], $new);
-          } elseif ('' === $new && isset($old))  {
+          } elseif ( ('' === $new || !isset($new) ) && isset($old) )  {
               delete_post_meta($post_id, $field['id'], $old);
-          }
+          } 
       } // end foreach  
 }
