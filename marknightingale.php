@@ -41,10 +41,10 @@ require $dir . 'includes/foundation-walker.php';
 //require $dir . '/includes/wpml-appointments.php';
 
 // Comment / decomment for FAQ custom post type
-//require $dir . '/includes/faq.php';
+require $dir . '/includes/faq.php';
 
 // Comment / decomment for Testimonial custom post type
-require $dir . '/includes/testimonial.php';
+//require $dir . '/includes/testimonial.php';
 
 
 
