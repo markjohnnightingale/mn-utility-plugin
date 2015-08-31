@@ -18,6 +18,7 @@ $config['active_modules'] = array(
 $config['include_dir'] = plugin_dir_path( __FILE__ ) . 'includes/';
 
 
-
+// Slider overlay 
+$config['slider']['has_overlay'] = false;
 
 ?>
