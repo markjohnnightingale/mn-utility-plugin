@@ -51,7 +51,9 @@ jQuery(document).ready(function($){
             		var targetElemTop = $targetElem.offset().top;
             		var targetElemBottom = $targetElem.offset().top + $targetElem.height();
 
-            		if (targetElemTop < docViewBottom && targetElemTop > docViewTop) {
+                    var marginOfError = 200
+
+            		if ( (targetElemTop < docViewTop+marginOfError && targetElemBottom > docViewTop ) ) {
             		    $menuItem.siblings().removeClass('active')
             		    $menuItem.addClass('active');
             		    return false;
