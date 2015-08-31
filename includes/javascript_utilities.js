@@ -7,6 +7,29 @@ jQuery(window).on('load scroll resize', function(){
     else { $header.removeClass('stuck'); }
 })
 
+/**
+      * jQuery().smoothScroll() function. 
+      *  
+      *************************
+    */
+jQuery.fn.smoothScroll = function() {
+    var $target = jQuery(this);
+    var menuBarHeight = jQuery('.top-bar').height();
+    var scrollTo = $target.offset().top-menuBarHeight-25;
+    jQuery('html,body').animate({ scrollTop: scrollTo }, 800);
+    return false;
+}
+
+function getHashFromUrl( url ) {
+    var matches = url.match(/(#[\w-_\.]*)/);
+    if (matches.length == 0) {
+        console.log('No Hash Found');
+        return -1;
+    } else {
+        return matches[0];
+    }
+}
+
 
 jQuery(document).ready(function($){
 	
@@ -16,12 +39,20 @@ jQuery(document).ready(function($){
       * hooks into the .smoothscroll class
       *************************
     */
-    $('body').on('click','a.smoothscroll',function(){
-        var $target = $( $(this).attr('href') );
-        var menuBarHeight = $('.top-bar').height();
-        var scrollTo = $target.offset().top-menuBarHeight-50;
-        $('html,body').animate({ scrollTop: scrollTo }, 800);
-        return false;
+    $('body').on('click','.smoothscroll',function(){
+        if ( $(this).is('a') ) {
+            var $target = $( getHashFromUrl( $(this).attr('href') ) );
+        } else if ( $(this).children('a').length === 1 ) {
+            var $target = $( getHashFromUrl( $(this).children('a').attr('href') ) );
+        } else {
+            return false;
+        }
+        if ($target.length > 0) {
+            $target.smoothScroll();
+            return false;
+        } else {
+            return true;
+        }
     });
 
 
@@ -45,7 +76,7 @@ jQuery(document).ready(function($){
             $ul.children('li').each(function(){
             	
             	var $menuItem = jQuery(this);
-            	var $targetElem = jQuery( $menuItem.find('a').eq(0).attr('href') );
+            	var $targetElem = jQuery( getHashFromUrl( $menuItem.find('a').eq(0).attr('href') ) );
 
             	if ($targetElem.length > 0 ) {
             		var targetElemTop = $targetElem.offset().top;

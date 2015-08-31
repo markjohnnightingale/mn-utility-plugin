@@ -25,7 +25,7 @@ function register_slider_type() {
 
     	register_post_type( 'slide', $args );
         
-        add_image_size('slider-size', $config['slider']['image_size']['x'], $config['slider']['image_size']['y'], true);
+        add_image_size('slider-size', $mn_config['slider']['image_size']['x'], $mn_config['slider']['image_size']['y'], true);
 }
 
 add_action('init', 'register_slider_type');
@@ -106,6 +106,7 @@ add_action( 'wp_enqueue_scripts', 'enqueue_slider_assets' );
  * params $auto_init = true ; $framework String = '' (bootstrap|foundation) ; $slider_options Array = array();
  */
 function mn_slideshow( $auto_init = true, $slider_options = array() ) {
+    global $mn_config;
     $query = new WP_Query(
         array(
             'post_type' => 'slide',
@@ -145,8 +146,7 @@ function mn_slideshow( $auto_init = true, $slider_options = array() ) {
                 if ( isset($post_meta['slider_url']) ) {
                     $output .= '</a>';
                 }
-
-                if ( $config['slider']['has_overlay'] ) {
+                if ( $mn_config['slider']['has_overlay'] == true ) {
                     // Add image overlay
                     $output .= '<div class="color_overlay"></div>';
                 }
@@ -163,7 +163,7 @@ function mn_slideshow( $auto_init = true, $slider_options = array() ) {
             }
             $output .= '</h3>';
 
-            if ( $config['slider']['content_type'] = 'content' ) {
+            if ( $mn_config['slider']['content_type'] = 'content' ) {
 
                 //Display content
                 $output .= '<div class="full_content">';

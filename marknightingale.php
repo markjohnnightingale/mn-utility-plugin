@@ -21,8 +21,8 @@ add_action( 'plugins_loaded', 'marknightingale_load_plugin_textdomain' );
 require plugin_dir_path( __FILE__ ) . 'conf.php';
 
 
-foreach ($config['active_modules'] as $module) {
-	require $config['include_dir'] . $module;
+foreach ($mn_config['active_modules'] as $module) {
+	require $mn_config['include_dir'] . $module;
 }
 
 
