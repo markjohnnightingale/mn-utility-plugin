@@ -57,16 +57,21 @@ function faq_add_post_meta_boxes() {
 }
 global $faq_meta_box_fields;
 $faq_meta_box_fields = array(
-    'id'    => 'faq',
-    'boxes' => array(
-        array(
+    'id'    => 'faq'
+    );
+
+$faq_meta_box_fields['boxes'] = array();
+if ( $config['faq']['has_homepage_option'] === true) {
+    $homepage_box = array(
             'label' => __('Appear on Home', 'marknightingale'),
             'desc'  => __('Check if you wish the FAQ to appear on the homepage', 'marknightingale'),
             'id'    => 'faq_home',
             'type'  => 'checkbox'
-        )
-    )
-);
+        );
+    $faq_meta_box_fields['boxes'][] = $homepage_box;
+} 
+
+
 
 function faq_meta_box( $object, $box ) {
     global $faq_meta_box_fields;

@@ -28,4 +28,8 @@ $config['slider']['image_size']['y'] = '500';
 // Slider displays what?
 $config['slider']['content_type'] = 'content';
 
+
+// FAQ 
+$config['faq']['has_homepage_option'] = false;
+
 ?>
