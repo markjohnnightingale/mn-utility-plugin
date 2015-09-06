@@ -1,9 +1,9 @@
 <?php 
 
 //  Load required modules
-$config = array();
+$mn_config = array();
 
-$config['active_modules'] = array(
+$mn_config['active_modules'] = array(
 	'meta-box-helper.php',
 	'slider.php',
 	'sitepress-query.php',
@@ -15,21 +15,21 @@ $config['active_modules'] = array(
 	'testimonial.php'
 );
 
-$config['include_dir'] = plugin_dir_path( __FILE__ ) . 'includes/';
+$mn_config['include_dir'] = plugin_dir_path( __FILE__ ) . 'includes/';
 
 
 // Slider overlay 
-$config['slider']['has_overlay'] = false;
+$mn_config['slider']['has_overlay'] = false;
 
 // Slider image size 
-$config['slider']['image_size']['x'] = '1200';
-$config['slider']['image_size']['y'] = '500';
+$mn_config['slider']['image_size']['x'] = '1200';
+$mn_config['slider']['image_size']['y'] = '500';
 
 // Slider displays what?
-$config['slider']['content_type'] = 'content';
+$mn_config['slider']['content_type'] = 'content';
 
 
 // FAQ 
-$config['faq']['has_homepage_option'] = false;
+$mn_config['faq']['has_homepage_option'] = false;
 
 ?>
