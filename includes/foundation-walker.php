@@ -9,7 +9,8 @@ class F5_TOP_BAR_WALKER extends Walker_Nav_Menu
         $element->has_children = !empty( $children_elements[$element->ID] );
         // print "<pre> Test".$children_elements[$element->ID]."</pre>";  
         if(!empty($element->classes)){
-            $element->classes[] = ( $element->current || $element->current_item_ancestor ) ? 'active' : '';
+            // echo "<pre>";print_r($element);echo "</pre>";
+            $element->classes[] = ( $element->current || $element->current_item_ancestor || in_array('current_page_parent', $element->classes) ) ? 'active' : '';
             $element->classes[] = ( $element->has_children ) ? 'has-dropdown' : '';           
         }
          
