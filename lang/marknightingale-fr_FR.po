@@ -1,15 +1,15 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Mark Nightingale v1\n"
-"POT-Creation-Date: 2015-05-29 16:46+0100\n"
-"PO-Revision-Date: 2015-05-29 16:47+0100\n"
+"POT-Creation-Date: 2015-09-16 13:55+0200\n"
+"PO-Revision-Date: 2015-09-16 13:58+0200\n"
 "Last-Translator: Mark Nightingale <hello@marknightingale.net>\n"
 "Language-Team: \n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.8.1\n"
+"X-Generator: Poedit 1.8.4\n"
 "X-Poedit-Basepath: .\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Poedit-KeywordsList: _e;__\n"
@@ -40,17 +40,108 @@ msgstr "FAQ"
 msgid "Question"
 msgstr "Question"
 
-#: ../includes/faq.php:51
+#: ../includes/faq.php:31 ../includes/faq.php:61
+msgid "Search FAQ Categories"
+msgstr ""
+
+#: ../includes/faq.php:32 ../includes/faq.php:62
+msgid "Popular FAQ Categories"
+msgstr ""
+
+#: ../includes/faq.php:33 ../includes/faq.php:63
+msgid "All FAQ Categories"
+msgstr ""
+
+#: ../includes/faq.php:34 ../includes/faq.php:35 ../includes/faq.php:64
+#: ../includes/faq.php:65
+msgid "Parent FAQ Category"
+msgstr ""
+
+#: ../includes/faq.php:36 ../includes/faq.php:66
+msgid "Edit FAQ Category"
+msgstr ""
+
+#: ../includes/faq.php:37 ../includes/faq.php:67
+msgid "Update FAQ Category"
+msgstr ""
+
+#: ../includes/faq.php:38 ../includes/faq.php:68
+msgid "Add New FAQ Category"
+msgstr ""
+
+#: ../includes/faq.php:39 ../includes/faq.php:69
+msgid "New FAQ Category Name"
+msgstr ""
+
+#: ../includes/faq.php:40 ../includes/faq.php:70
+msgid "Add or remove FAQ Categories"
+msgstr ""
+
+#: ../includes/faq.php:41 ../includes/faq.php:71
+msgid "Choose from most used FAQ Categories"
+msgstr ""
+
+#: ../includes/faq.php:42 ../includes/faq.php:72
+msgid "FAQ Category"
+msgstr ""
+
+#: ../includes/faq.php:106
 msgid "FAQ Metadata"
 msgstr "Méta-données FAQ"
 
-#: ../includes/faq.php:63
+#: ../includes/faq.php:121
 msgid "Appear on Home"
 msgstr "Disponible sur la page d'accueil"
 
-#: ../includes/faq.php:64
+#: ../includes/faq.php:122
 msgid "Check if you wish the FAQ to appear on the homepage"
 msgstr "Cochez la case si vous voulez afficher cette question sur la page d'accueil"
+
+#: ../includes/rooms.php:8 ../includes/rooms.php:10
+msgid "Enigmas"
+msgstr "Enquêtes"
+
+#: ../includes/rooms.php:9
+msgid "Enigma"
+msgstr "Enquête"
+
+#: ../includes/rooms.php:51
+msgid "Room Metadata"
+msgstr "Métadonnées pour l’enquête"
+
+#: ../includes/rooms.php:63
+msgid "Icon URL"
+msgstr "URL de l’Icône de l’énigme"
+
+#: ../includes/rooms.php:64
+msgid "URL for the room icon"
+msgstr "URL pour l’icône de la salle"
+
+#: ../includes/rooms.php:69
+msgid "Desktop X position"
+msgstr "Position X Desktop"
+
+#: ../includes/rooms.php:70 ../includes/rooms.php:76
+#, php-format
+msgid "Position in % from center of map on desktop"
+msgstr "Position en px du centre de la carte"
+
+#: ../includes/rooms.php:75
+msgid "Desktop Y position"
+msgstr "Position Y Desktop"
+
+#: ../includes/rooms.php:81
+msgid "Mobile X position"
+msgstr "Position X mobile"
+
+#: ../includes/rooms.php:82 ../includes/rooms.php:88
+#, php-format
+msgid "Position in % from center of map on mobile"
+msgstr "Position en px du centre de la carte sur mobile"
+
+#: ../includes/rooms.php:87
+msgid "Mobile Y position"
+msgstr "Position Y mobile"
 
 #: ../includes/slider.php:8
 msgid "Slides"
@@ -76,6 +167,41 @@ msgstr "URL"
 msgid "The URL of the link for this slide"
 msgstr "L'URL pour le lien sur cette diapo"
 
-#: ../includes/utilities.php:86
-msgid "This post is also available in: "
-msgstr "Cet article aussi disponible en :"
+#: ../includes/testimonial.php:8 ../includes/testimonial.php:10
+msgid "Testimonials"
+msgstr "Témoignages"
+
+#: ../includes/testimonial.php:9
+msgid "Testimonial"
+msgstr "Témoignage"
+
+#: ../includes/testimonial.php:51
+msgid "Testimonial Metadata"
+msgstr "Métadonnées du témoignage"
+
+#: ../includes/testimonial.php:63
+msgid "Featured"
+msgstr ""
+
+#: ../includes/testimonial.php:64
+msgid "Check if you wish the testimonial to appear in the person block"
+msgstr ""
+
+#: ../includes/testimonial.php:70
+msgid "Name"
+msgstr ""
+
+#: ../includes/testimonial.php:71
+msgid "The name of the person giving the testimonial"
+msgstr ""
+
+#: ../includes/testimonial.php:77
+msgid "Thumbnail URL"
+msgstr ""
+
+#: ../includes/testimonial.php:78
+msgid "URL of the image to use as a thumbnail"
+msgstr ""
+
+#~ msgid "This post is also available in: "
+#~ msgstr "Cet article aussi disponible en :"
