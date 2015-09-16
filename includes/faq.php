@@ -5,29 +5,84 @@
 
 function register_faq_type() {
     $labels = array(
-    		'name'               => __( 'FAQ', 'marknightingale' ),
-    		'singular_name'      => __( 'Question', 'marknightingale' ),
-    		'menu_name'          => __( 'FAQ', 'marknightingale' )
-    	);
+		'name'               => __( 'FAQ', 'marknightingale' ),
+		'singular_name'      => __( 'Question', 'marknightingale' ),
+		'menu_name'          => __( 'FAQ', 'marknightingale' )
+	);
 
-    	$args = array(
-    		'labels'             => $labels,
-    		'public'             => false,
-    		'publicly_queryable' => false,
-    		'show_ui'            => true,
-    		'show_in_nav_menus'  => false,
-    		'rewrite'            => array( 'slug' => 'faq' ),
-    		'capability_type'    => 'post',
-    		'has_archive'        => false,
-    		'hierarchical'       => false,
-    		'supports'           => array( 'title', 'author', 'thumbnail', 'editor', 'page-attributes' )
-    	);
+	$args = array(
+		'labels'             => $labels,
+		'public'             => false,
+		'publicly_queryable' => false,
+		'show_ui'            => true,
+		'show_in_nav_menus'  => false,
+		'rewrite'            => array( 'slug' => 'faq' ),
+		'capability_type'    => 'post',
+		'has_archive'        => false,
+		'hierarchical'       => false,
+		'supports'           => array( 'title', 'author', 'thumbnail', 'editor', 'page-attributes' )
+	);
 
-    	register_post_type( 'faq', $args );
-        
+	register_post_type( 'faq', $args );
+    
+    $labels = array(
+        'name'                    => _x( 'FAQ Categories', 'Taxonomy FAQ Categories', 'marknightingale' ),
+        'singular_name'            => _x( 'FAQ Category', 'Taxonomy FAQ Category', 'marknightingale' ),
+        'search_items'            => __( 'Search FAQ Categories', 'marknightingale' ),
+        'popular_items'            => __( 'Popular FAQ Categories', 'marknightingale' ),
+        'all_items'                => __( 'All FAQ Categories', 'marknightingale' ),
+        'parent_item'            => __( 'Parent FAQ Category', 'marknightingale' ),
+        'parent_item_colon'        => __( 'Parent FAQ Category', 'marknightingale' ),
+        'edit_item'                => __( 'Edit FAQ Category', 'marknightingale' ),
+        'update_item'            => __( 'Update FAQ Category', 'marknightingale' ),
+        'add_new_item'            => __( 'Add New FAQ Category', 'marknightingale' ),
+        'new_item_name'            => __( 'New FAQ Category Name', 'marknightingale' ),
+        'add_or_remove_items'    => __( 'Add or remove FAQ Categories', 'marknightingale' ),
+        'choose_from_most_used'    => __( 'Choose from most used FAQ Categories', 'marknightingale' ),
+        'menu_name'                => __( 'FAQ Category', 'marknightingale' ),
+    );
+
+    $args = array(
+        'labels'            => $labels,
+        'public'            => false,
+        'hierarchical'      => true
+    );
+
+    register_taxonomy( 'faq-category', array( 'faq' ), $args );
+
 }
 
 add_action('init', 'register_faq_type');
+
+function register_faq_taxo() {
+       $labels = array(
+        'name'                    => _x( 'FAQ Categories', 'Taxonomy FAQ Categories', 'marknightingale' ),
+        'singular_name'            => _x( 'FAQ Category', 'Taxonomy FAQ Category', 'marknightingale' ),
+        'search_items'            => __( 'Search FAQ Categories', 'marknightingale' ),
+        'popular_items'            => __( 'Popular FAQ Categories', 'marknightingale' ),
+        'all_items'                => __( 'All FAQ Categories', 'marknightingale' ),
+        'parent_item'            => __( 'Parent FAQ Category', 'marknightingale' ),
+        'parent_item_colon'        => __( 'Parent FAQ Category', 'marknightingale' ),
+        'edit_item'                => __( 'Edit FAQ Category', 'marknightingale' ),
+        'update_item'            => __( 'Update FAQ Category', 'marknightingale' ),
+        'add_new_item'            => __( 'Add New FAQ Category', 'marknightingale' ),
+        'new_item_name'            => __( 'New FAQ Category Name', 'marknightingale' ),
+        'add_or_remove_items'    => __( 'Add or remove FAQ Categories', 'marknightingale' ),
+        'choose_from_most_used'    => __( 'Choose from most used FAQ Categories', 'marknightingale' ),
+        'menu_name'                => __( 'FAQ Category', 'marknightingale' ),
+    );
+
+    $args = array(
+        'labels'            => $labels,
+        'public'            => false,
+        'hierarchical'      => true,
+        'show_ui'           => true
+    );
+
+    register_taxonomy( 'faq-category', array( 'faq' ), $args );
+}
+add_action('init', 'register_faq_taxo');
+
 
 /*
     
