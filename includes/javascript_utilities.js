@@ -12,10 +12,15 @@ jQuery(window).on('load scroll resize', function(){
       *  
       *************************
     */
-jQuery.fn.smoothScroll = function() {
+jQuery.fn.smoothScroll = function( options ) {
+    options = jQuery.extend({
+        margin: 35,
+        menuBarSelector: '.top-bar'
+    }, options);
+    
     var $target = jQuery(this);
-    var menuBarHeight = jQuery('.top-bar').height();
-    var scrollTo = $target.offset().top - menuBarHeight - 35;
+    var menuBarHeight = jQuery(options.menuBarSelector).height();
+    var scrollTo = $target.offset().top - menuBarHeight - options.margin;
     jQuery('html,body').animate({ scrollTop: scrollTo }, 800);
     return false;
 }
