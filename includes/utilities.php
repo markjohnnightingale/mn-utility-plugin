@@ -124,6 +124,13 @@ function icl_get_page_id_by_slug($page_slug) {
     
 }
 
+// Allow SVG
+function allow_svg_mime_types( $mimes ){
+    $mimes['svg'] = 'image/svg+xml';
+    return $mimes;
+}
+add_filter( 'upload_mimes', 'allow_svg_mime_types' );
+
 
 // Add Custom JS Utilities
 function enqueue_utility_js() {
