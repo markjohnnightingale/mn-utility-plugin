@@ -66,11 +66,12 @@ jQuery(document).ready(function($){
     if ( jQuery('ul.highlight-menu').length > 0 ) {
     	var $ul = jQuery('.highlight-menu');
 
-        jQuery(window).on('scroll resize load',function(){
+        jQuery(window).on('load resize',function(){
             
-            // Get top and bottom of window
-            var docViewTop = jQuery(window).scrollTop();
-            var docViewBottom = docViewTop + jQuery(window).height();
+            
+
+            var targets = [];
+            var marginOfError = 200
 
             // for each block, check if it is in the frame. 
             $ul.children('li').each(function(){
@@ -82,18 +83,56 @@ jQuery(document).ready(function($){
             		var targetElemTop = $targetElem.offset().top;
             		var targetElemBottom = $targetElem.offset().top + $targetElem.height();
 
-                    var marginOfError = 200
+                    targets.push({
+                        $menuItem: $menuItem,
+                        id: $targetElem.attr('id'),
+                        top: targetElemTop,
+                        bottom: targetElemBottom
+                    })
 
-            		if ( (targetElemTop < docViewTop+marginOfError && targetElemBottom > docViewTop ) ) {
-            		    $menuItem.siblings().removeClass('active')
-            		    $menuItem.addClass('active');
-            		    return false;
-            		} else {
-            		    $menuItem.removeClass('active')
-            		}
+            		// if ( (targetElemTop < docViewTop+marginOfError && targetElemBottom > docViewTop ) ) {
+            		//     $menuItem.siblings().removeClass('active')
+            		//     $menuItem.addClass('active');
+            		//     return false;
+            		// } else {
+            		//     $menuItem.removeClass('active')
+            		// }
 
             	}
                 
+            });
+
+            // Sort the array from the highest to lowest elements
+            targets.sort(function(a, b){
+                if (a.bottom < b.bottom) {
+                    return -1;
+                } else if (a.bottom > b.bottom) {
+                    return 1;
+                } else {
+                    return 0;
+                }
+            });
+            console.log(targets);
+
+            // On scroll;
+            jQuery(window).on('scroll load resize', function() {
+                
+                // Get top and bottom of window
+                var docViewTop = jQuery(window).scrollTop();
+                var docViewBottom = docViewTop + jQuery(window).height();
+
+                // Iterate backwards through the array until you hit an element which is visible above the bottom of the screen. 
+                for (var i = targets.length-1; i >= 0; i-- ) {
+                    
+                    if (targets[i].top+marginOfError < docViewBottom) {
+                        
+                        // Element is above the fold
+                        targets[i].$menuItem.siblings().removeClass('active');
+                        targets[i].$menuItem.addClass('active');
+                        return false;
+                    } 
+
+                }
             }) 
         })
     }
