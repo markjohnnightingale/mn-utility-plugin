@@ -23,7 +23,6 @@ jQuery.fn.smoothScroll = function() {
 function getHashFromUrl( url ) {
     var matches = url.match(/(#[\w-_\.]*)/);
     if (matches.length == 0) {
-        console.log('No Hash Found');
         return -1;
     } else {
         return matches[0];
@@ -112,7 +111,6 @@ jQuery(document).ready(function($){
                     return 0;
                 }
             });
-            console.log(targets);
 
             // On scroll;
             jQuery(window).on('scroll load resize', function() {
