@@ -1,10 +1,39 @@
+/**********************************
+***** Create config object ********
+***********************************/
+var mnConfig;
+
+// Set defaults (can be overridden by changing specific properties)
+var mnConfig = {
+    parallax: {
+        velocity: 0.3,
+        parallaxSelector: '.parallax',
+        slideInSelector: '.slide-in',
+        slideDistance: 600
+    },
+    stickyHeader: {
+        marginTop: 300,
+        stickyClass: 'stuck',
+        headerSelector: '.site-header'
+    },
+    smoothScroll: {
+        menuBarHeight: jQuery('.title-area').height(),
+        marginOfError: 25,
+        smoothScrollSelector: '.smoothscroll'
+    },
+    highlightMenu: {
+        marginOfError: 200,
+    }
+}
+
+
 /** 
  *  Sticky header
  */
 jQuery(window).on('load scroll resize', function(){
-    var $header = jQuery('.site-header');
-    if (jQuery(window).scrollTop() > 300 ) {$header.addClass('stuck'); }
-    else { $header.removeClass('stuck'); }
+    var $header = jQuery( mnConfig.stickyHeader.headerSelector );
+    if (jQuery(window).scrollTop() > mnConfig.stickyHeader.marginTop ) {$header.addClass( mnConfig.stickyHeader.stickyClass ); }
+    else { $header.removeClass( mnConfig.stickyHeader.stickyClass ); }
 })
 
 /**
@@ -14,8 +43,8 @@ jQuery(window).on('load scroll resize', function(){
     */
 jQuery.fn.smoothScroll = function() {
     var $target = jQuery(this);
-    var menuBarHeight = jQuery('.title-area').height();
-    var scrollTo = $target.offset().top-menuBarHeight-25;
+    var menuBarHeight = mnConfig.smoothScroll.menuBarHeight;
+    var scrollTo = $target.offset().top-menuBarHeight-mnConfig.smoothScroll.marginOfError;
     jQuery('html,body').animate({ scrollTop: scrollTo }, 800);
     return false;
 }
@@ -38,7 +67,7 @@ jQuery(document).ready(function($){
       * hooks into the .smoothscroll class
       *************************
     */
-    $('body').on('click','.smoothscroll',function(){
+    $('body').on('click', mnConfig.smoothScroll.smoothScrollSelector ,function(){
         if ( $(this).is('a') ) {
             var $target = $( getHashFromUrl( $(this).attr('href') ) );
         } else if ( $(this).children('a').length === 1 ) {
@@ -70,7 +99,7 @@ jQuery(document).ready(function($){
             
 
             var targets = [];
-            var marginOfError = 200
+            var marginOfError = mnConfig.highlightMenu.marginOfError;
 
             // for each block, check if it is in the frame. 
             $ul.children('li').each(function(){
@@ -137,4 +166,111 @@ jQuery(document).ready(function($){
 
 
 
-})
+});
+
+
+
+/***************
+***  Parallax ***
+***************/
+/* ===========
+    Document Scroll
+    ========= */
+// Parallax stuff
+var $window = jQuery(window);
+var velocity = mnConfig.parallax.velocity;
+
+// Put slidein values in data-attributes 
+jQuery(window).on('load resize', function(){
+    jQuery( mnConfig.parallax.slideInSelector ).each(function(){
+        console.log(this);
+        jQuery(this).attr('data-orig-left', jQuery(this).css('left') );
+        jQuery(this).attr('data-orig-right', jQuery(this).css('right') );
+    });
+    $window.bind('scroll DOMMouseScroll', update);
+
+});
+
+function update(){
+    var pos = $window.scrollTop();
+    
+    // Background Parallax
+    jQuery( mnConfig.parallax.parallaxSelector ).each(function() {
+        var width = (window.innerWidth > 0) ? window.innerWidth : screen.width;
+        
+        var $element = jQuery(this);
+        var height = $element.height();
+        var currentOffset = $element.offset();
+        jQuery(this).css('backgroundPosition', '50% ' + ( ( pos-currentOffset.top ) * velocity) + 'px');
+        
+    });
+
+    // Images slide-in
+    jQuery( mnConfig.parallax.slideInSelector ).each(function(){
+
+        if (jQuery(this).parents('.image-block-right').length > 0 ) {
+            var side = 'left';
+        } else {
+            var side = 'right';
+        }
+        $element = jQuery(this);
+
+        // Get initial settings
+        // Set element back to inherit stylesheet css
+
+        $element.css('left','');
+        $element.css('right','');
+        var origPos = {};
+        origPos['left'] = parseFloat( $element.attr('data-orig-left') );
+        origPos['right'] = parseFloat( $element.attr('data-orig-right') );
+
+        // If its 'auto' then set to 0;
+        if (isNaN(origPos[side])) origPos[side] = 0;
+
+        // Set initial CSS
+        $element.css({
+            position: "relative",
+            opacity: 0
+        })
+        $element.css(side, mnConfig.parallax.slideDistance + origPos[side]  );
+
+        // Get viewport 
+
+        function viewport(theWindow) {
+            this.top = jQuery(theWindow).scrollTop();
+            this.bottom = jQuery(theWindow).scrollTop() + jQuery(theWindow).height();
+            this.height = this.bottom - this.top;
+            this.middlePoint = this.top + (this.height / 2) - 100;
+            this.shows = function ($elem) {
+                if ( $elem.offset().top < this.bottom && $elem.offset().top + $elem.height() > this.top ) {
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+        }
+        var theWindow = new viewport(window);
+        var $elem = jQuery(this);
+        function slideOffset() {
+            if ($elem.offset().top - theWindow.middlePoint < 0) {
+                return 0;
+            } else if ($elem.offset().top - theWindow.middlePoint > mnConfig.parallax.slideDistance) {
+                return 1;
+            } else {
+                return ($elem.offset().top - theWindow.middlePoint) / mnConfig.parallax.slideDistance;
+            }
+        }
+        $elem.css(side, mnConfig.parallax.slideDistance * slideOffset()  + origPos[side] );
+        $elem.css("opacity", 1 - slideOffset())
+
+
+    });
+};
+
+
+// Fire for all touch movements
+jQuery(window).on('touchstart touchend touchmove mousewheel touchcancel gesturestart gestureend gesturechange orientationchange', function(){
+        //alert($(window).scrollTop());
+        jQuery(window).trigger('scroll');
+    });
+
