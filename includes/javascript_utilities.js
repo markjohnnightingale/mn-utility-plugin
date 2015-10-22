@@ -212,9 +212,11 @@ jQuery(window).on('load resize', function(){
         jQuery(this).attr('data-orig-left', jQuery(this).css('left') );
         jQuery(this).attr('data-orig-right', jQuery(this).css('right') );
     });
-    $window.bind('scroll DOMMouseScroll', update);
-
 });
+jQuery(window).load(function(){
+    $window.bind('scroll DOMMouseScroll', update);
+    update();
+})
 
 
 // Function to update parallax effects
