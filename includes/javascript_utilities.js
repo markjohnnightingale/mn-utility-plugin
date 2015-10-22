@@ -178,7 +178,6 @@ jQuery(document).ready(function($){
     ========= */
 // Parallax stuff
 var $window = jQuery(window);
-var velocity = mnConfig.parallax.velocity;
 
 // Define viewport 
 function viewport(theWindow) {
@@ -229,8 +228,7 @@ function update(){
         var $element = jQuery(this);
         var height = $element.height();
         var currentOffset = $element.offset();
-        jQuery(this).css('backgroundPosition', '50% ' + ( ( pos-currentOffset.top ) * velocity) + 'px');
-        
+        jQuery(this).css('backgroundPosition', '50% ' + ( ( pos-currentOffset.top ) * mnConfig.parallax.velocity) + 'px');
     });
 
     // Images slide-in
