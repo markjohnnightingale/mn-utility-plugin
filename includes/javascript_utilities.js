@@ -180,10 +180,36 @@ jQuery(document).ready(function($){
 var $window = jQuery(window);
 var velocity = mnConfig.parallax.velocity;
 
+// Define viewport 
+function viewport(theWindow) {
+    this.top = jQuery(theWindow).scrollTop();
+    this.bottom = jQuery(theWindow).scrollTop() + jQuery(theWindow).height();
+    this.height = this.bottom - this.top;
+    this.middlePoint = this.top + (this.height / 2) - 100;
+    this.shows = function ($elem) {
+        if ( $elem.offset().top < this.bottom && $elem.offset().top + $elem.height() > this.top ) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    this.update = function() {
+        this.top = jQuery(theWindow).scrollTop();
+        this.bottom = jQuery(theWindow).scrollTop() + jQuery(theWindow).height();
+        this.height = this.bottom - this.top;
+        this.middlePoint = this.top + (this.height / 2) - 100;
+    }
+}
+var theWindow = new viewport(window);
+
 // Put slidein values in data-attributes 
 jQuery(window).on('load resize', function(){
     jQuery( mnConfig.parallax.slideInSelector ).each(function(){
-        console.log(this);
+        // Set element back to inherit stylesheet css
+        jQuery(this).css('left','');
+        jQuery(this).css('right','');
+
+        // Save CSS values
         jQuery(this).attr('data-orig-left', jQuery(this).css('left') );
         jQuery(this).attr('data-orig-right', jQuery(this).css('right') );
     });
@@ -191,6 +217,8 @@ jQuery(window).on('load resize', function(){
 
 });
 
+
+// Function to update parallax effects
 function update(){
     var pos = $window.scrollTop();
     
@@ -234,22 +262,9 @@ function update(){
         })
         $element.css(side, mnConfig.parallax.slideDistance + origPos[side]  );
 
-        // Get viewport 
+        // Update viewport 
+        theWindow.update();
 
-        function viewport(theWindow) {
-            this.top = jQuery(theWindow).scrollTop();
-            this.bottom = jQuery(theWindow).scrollTop() + jQuery(theWindow).height();
-            this.height = this.bottom - this.top;
-            this.middlePoint = this.top + (this.height / 2) - 100;
-            this.shows = function ($elem) {
-                if ( $elem.offset().top < this.bottom && $elem.offset().top + $elem.height() > this.top ) {
-                    return true;
-                } else {
-                    return false;
-                }
-            }
-        }
-        var theWindow = new viewport(window);
         var $elem = jQuery(this);
         function slideOffset() {
             if ($elem.offset().top - theWindow.middlePoint < 0) {
@@ -268,7 +283,7 @@ function update(){
 };
 
 
-// Fire for all touch movements
+// Fire update() for all touch movements
 jQuery(window).on('touchstart touchend touchmove mousewheel touchcancel gesturestart gestureend gesturechange orientationchange', function(){
         //alert($(window).scrollTop());
         jQuery(window).trigger('scroll');
