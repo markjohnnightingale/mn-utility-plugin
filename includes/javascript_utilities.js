@@ -51,11 +51,16 @@ jQuery.fn.smoothScroll = function() {
 
 function getHashFromUrl( url ) {
     var matches = url.match(/(#[\w-_\.]*)/);
-    if (matches.length == 0) {
-        return -1;
+    if (matches) {
+        if (matches.length == 0) {
+            return -1;
+        } else {
+            return matches[0];
+        }
     } else {
-        return matches[0];
+        return false;
     }
+    
 }
 
 
