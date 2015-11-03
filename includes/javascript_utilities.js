@@ -9,7 +9,8 @@ var mnConfig = {
         velocity: 0.3,
         parallaxSelector: '.parallax',
         slideInSelector: '.slide-in',
-        slideDistance: 600
+        slideDistance: 600,
+        enabledOnMobile: false
     },
     stickyHeader: {
         marginTop: 300,
@@ -19,7 +20,7 @@ var mnConfig = {
     smoothScroll: {
         menuBarHeight: jQuery('.title-area').height(),
         marginOfError: 25,
-        smoothScrollSelector: '.smoothscroll'
+        smoothScrollSelector: '.smoothscroll',
     },
     highlightMenu: {
         marginOfError: 200,
@@ -226,65 +227,82 @@ jQuery(window).load(function(){
 
 // Function to update parallax effects
 function update(){
-    var pos = $window.scrollTop();
-    
-    // Background Parallax
-    jQuery( mnConfig.parallax.parallaxSelector ).each(function() {
-        var width = (window.innerWidth > 0) ? window.innerWidth : screen.width;
+    if ( mnConfig.parallax.enabledOnMobile || jQuery(window).width() > 768 ) {
+        var pos = $window.scrollTop();
         
-        var $element = jQuery(this);
-        var height = $element.height();
-        var currentOffset = $element.offset();
-        jQuery(this).css('backgroundPosition', '50% ' + ( ( pos-currentOffset.top ) * mnConfig.parallax.velocity) + 'px');
-    });
+        // Background Parallax
+        jQuery( mnConfig.parallax.parallaxSelector ).each(function() {
+            var width = (window.innerWidth > 0) ? window.innerWidth : screen.width;
+            
+            var $element = jQuery(this);
+            var height = $element.height();
+            var currentOffset = $element.offset();
+            jQuery(this).css('backgroundPosition', '50% ' + ( ( pos-currentOffset.top ) * mnConfig.parallax.velocity) + 'px');
+        });
 
-    // Images slide-in
-    jQuery( mnConfig.parallax.slideInSelector ).each(function(){
+        // Images slide-in
+        jQuery( mnConfig.parallax.slideInSelector ).each(function(){
 
-        if (jQuery(this).parents('.image-block-right').length > 0 ) {
-            var side = 'left';
-        } else {
-            var side = 'right';
-        }
-        $element = jQuery(this);
-
-        // Get initial settings
-        // Set element back to inherit stylesheet css
-
-        $element.css('left','');
-        $element.css('right','');
-        var origPos = {};
-        origPos['left'] = parseFloat( $element.attr('data-orig-left') );
-        origPos['right'] = parseFloat( $element.attr('data-orig-right') );
-
-        // If its 'auto' then set to 0;
-        if (isNaN(origPos[side])) origPos[side] = 0;
-
-        // Set initial CSS
-        $element.css({
-            position: "relative",
-            opacity: 0
-        })
-        $element.css(side, mnConfig.parallax.slideDistance + origPos[side]  );
-
-        // Update viewport 
-        theWindow.update();
-
-        var $elem = jQuery(this);
-        function slideOffset() {
-            if ($elem.offset().top - theWindow.middlePoint < 0) {
-                return 0;
-            } else if ($elem.offset().top - theWindow.middlePoint > mnConfig.parallax.slideDistance) {
-                return 1;
+            if (jQuery(this).parents('.image-block-right').length > 0 ) {
+                var side = 'left';
             } else {
-                return ($elem.offset().top - theWindow.middlePoint) / mnConfig.parallax.slideDistance;
+                var side = 'right';
             }
-        }
-        $elem.css(side, mnConfig.parallax.slideDistance * slideOffset()  + origPos[side] );
-        $elem.css("opacity", 1 - slideOffset())
+            $element = jQuery(this);
+
+            // Get initial settings
+            // Set element back to inherit stylesheet css
+
+            $element.css('left','');
+            $element.css('right','');
+            var origPos = {};
+            origPos['left'] = parseFloat( $element.attr('data-orig-left') );
+            origPos['right'] = parseFloat( $element.attr('data-orig-right') );
+
+            // If its 'auto' then set to 0;
+            if (isNaN(origPos[side])) origPos[side] = 0;
+
+            // Set initial CSS
+            $element.css({
+                position: "relative",
+                opacity: 0
+            })
+            $element.css(side, mnConfig.parallax.slideDistance + origPos[side]  );
+
+            // Update viewport 
+            theWindow.update();
+
+            var $elem = jQuery(this);
+            function slideOffset() {
+                if ($elem.offset().top - theWindow.middlePoint < 0) {
+                    return 0;
+                } else if ($elem.offset().top - theWindow.middlePoint > mnConfig.parallax.slideDistance) {
+                    return 1;
+                } else {
+                    return ($elem.offset().top - theWindow.middlePoint) / mnConfig.parallax.slideDistance;
+                }
+            }
+            $elem.css(side, mnConfig.parallax.slideDistance * slideOffset()  + origPos[side] );
+            $elem.css("opacity", 1 - slideOffset())
 
 
-    });
+        });
+    } else {
+        // Set Slide-in to normal
+        jQuery( mnConfig.parallax.slideInSelector ).each(function(){
+            $element = jQuery(this);
+            // Set element back to inherit stylesheet css
+            $element.css('left','');
+            $element.css('right','');
+            $element.css('opacity','');
+        });
+
+        // Set backgroundPosition to normal
+        jQuery( mnConfig.parallax.parallaxSelector ).each(function() {
+            jQuery(this).css('backgroundPosition', '');
+        });
+    }
+    
 };
 
 
