@@ -28,6 +28,9 @@ var mnConfig = {
 }
 
 
+// Test if Safari
+var is_safari = navigator.userAgent.indexOf("Safari") > -1;
+
 /** 
  *  Sticky header
  */
@@ -207,18 +210,41 @@ function viewport(theWindow) {
 }
 var theWindow = new viewport(window);
 
-// Put slidein values in data-attributes 
-jQuery(window).on('load resize', function(){
-    jQuery( mnConfig.parallax.slideInSelector ).each(function(){
-        // Set element back to inherit stylesheet css
-        jQuery(this).css('left','');
-        jQuery(this).css('right','');
+// Put slidein values in data-attributes (not for safari because it calculates the CSS left/right properties in crazy ways)
+if (!is_safari) {
+    jQuery(window).on('load resize', function(){
+        jQuery( mnConfig.parallax.slideInSelector ).each(function(){
+            // Set element back to inherit stylesheet css
+            jQuery(this).css('left','');
+            jQuery(this).css('right','');
+            
+            
+            // if css('side') returns a percentage value, convert it to a pixel value
+            function storeSideValue( el, side ) {
+                
+                if ( el.css(side).indexOf('%') >= 0 ) {
+                    // Convert side to pixels
+                    var percentage = parseFloat( el.css(side) );
+                    var parentWidth = el.parent().width();
+                    var pixels = percentage / 100 * parentWidth;
+                    el.attr('data-orig-'+side, pixels);
+                } else if ( el.css(side).indexOf('px') >= 0 ){
+                    el.attr('data-orig-'+side, parseFloat( el.css(side) ) );
 
-        // Save CSS values
-        jQuery(this).attr('data-orig-left', jQuery(this).css('left') );
-        jQuery(this).attr('data-orig-right', jQuery(this).css('right') );
+                } else {
+                    el.attr('data-orig-'+side, 0 );
+                }
+            }
+
+            // Save CSS values
+            storeSideValue( jQuery(this), 'left' );
+            storeSideValue( jQuery(this), 'right' );
+
+
+        });
     });
-});
+}
+
 jQuery(window).load(function(){
     $window.bind('scroll DOMMouseScroll', update);
     update();
@@ -256,11 +282,13 @@ function update(){
             $element.css('left','');
             $element.css('right','');
             var origPos = {};
+
+
             origPos['left'] = parseFloat( $element.attr('data-orig-left') );
             origPos['right'] = parseFloat( $element.attr('data-orig-right') );
 
-            // If its 'auto' then set to 0;
-            if (isNaN(origPos[side])) origPos[side] = 0;
+
+            
 
             // Set initial CSS
             $element.css({
