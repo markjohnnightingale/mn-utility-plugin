@@ -116,7 +116,7 @@ $faq_meta_box_fields = array(
     );
 
 $faq_meta_box_fields['boxes'] = array();
-if ( $config['faq']['has_homepage_option'] === true) {
+if ( $mn_config['faq']['has_homepage_option'] === true) {
     $homepage_box = array(
             'label' => __('Appear on Home', 'marknightingale'),
             'desc'  => __('Check if you wish the FAQ to appear on the homepage', 'marknightingale'),
@@ -125,7 +125,6 @@ if ( $config['faq']['has_homepage_option'] === true) {
         );
     $faq_meta_box_fields['boxes'][] = $homepage_box;
 } 
-
 
 
 function faq_meta_box( $object, $box ) {

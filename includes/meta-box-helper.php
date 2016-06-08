@@ -7,8 +7,8 @@
  */
 function mn_build_meta_box( $metabox ) {
     global $post;
-
     wp_nonce_field( basename( __FILE__ ), $metabox['id'].'_metabox_nonce' );
+
     $output = '';
     foreach($metabox['boxes'] as $field) {
         $meta = get_post_meta($post->ID, $field['id'], true);

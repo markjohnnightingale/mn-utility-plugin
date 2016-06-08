@@ -2,7 +2,7 @@
  *  Sticky header
  */
 jQuery(window).on('load scroll resize', function(){
-    var $header = jQuery('.site-header');
+    var $header = jQuery('.site-header.mn-sticky');
     if (jQuery(window).scrollTop() > 300 ) {$header.addClass('stuck'); }
     else { $header.removeClass('stuck'); }
 })
