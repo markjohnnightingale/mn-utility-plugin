@@ -21,6 +21,12 @@ function mn_build_meta_box( $metabox ) {
             case 'checkbox':
             $output .= "<p><label for='${field['id']}'>${field['label']}</label><br>";
             $output .= "<input type='checkbox' name='${field['id']}' id='${field['id']}' value='yes' ". checked( $meta, 'yes', false ) ." /> ";
+            $output .= "<label class='description' for='${field['id']}'>${field['desc']}</span>";
+            break;
+            case 'upload':
+            $output .= "<p><label for='${field['id']}'>${field['label']}</label><br>";
+            $output .= "<input type='text' name='${field['id']}' id='${field['id']}' class='upload_image' value='$meta' /> ";
+            $output .= "<input id='${field['id']}_button' type='button' class='upload_image_button' value=".__('Upload Image', 'marknightingale')." data-target='${field['id']}'/> ";
             $output .= "<span class='description'>${field['desc']}</span>";
             break;
 
@@ -60,3 +66,24 @@ function mn_save_meta_data( $post_id, $post, $metabox ) {
           } 
       } // end foreach  
 }
+
+/* Custom meta_box builder
+ * 
+ * mn_save_meta_data( $post_id, $post, $metabox Array )
+ * 
+ * 
+ */
+
+function my_admin_scripts() {    
+    wp_enqueue_script('media-upload');
+    wp_enqueue_script('thickbox');
+    wp_register_script('uploader-js', get_stylesheet_directory_uri().'/js/uploader.js', array('jquery'));
+    wp_enqueue_script('uploader-js');
+}
+
+function my_admin_styles() {
+
+    wp_enqueue_style('thickbox');
+}
+add_action('admin_enqueue_scripts', 'my_admin_scripts');
+add_action('admin_enqueue_styles', 'my_admin_styles');
