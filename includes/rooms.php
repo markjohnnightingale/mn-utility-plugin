@@ -59,6 +59,12 @@ global $room_meta_box_fields;
 $room_meta_box_fields = array(
     'id'    => 'room',
     'boxes' => array(
+    	array(
+            'label' => __('Players', 'marknightingale'),
+            'desc'  => __('Text displaying the number of players', 'marknightingale'),
+            'id'    => 'room_players',
+            'type'  => 'text'
+        ),
         array(
             'label' => __('Icon URL', 'marknightingale'),
             'desc'  => __('URL for the room icon', 'marknightingale'),
