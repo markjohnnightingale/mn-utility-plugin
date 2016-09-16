@@ -67,6 +67,7 @@ function mn_language_selector( $args = array() ){
         $defaults = array(
             'classes' => '',
             'has_dividers' => false,
+            'has_flags' => false,
             'format' => 'inline-menu',
             'full_name' => false,
             'order' => 'ASC',
@@ -97,12 +98,18 @@ function mn_language_selector( $args = array() ){
         } 
         $i = 0;
         foreach($languages as $l){
+
             if ($l['language_code'] == 'zh-hans') { $l['language_code'] = '中文'; }
             if ($l['active']) { $class = 'active'; } else {$class = '';}
 
             if ( $params['has_dividers'] && $i > 0) echo "<li class='divider'></li>";
             echo '<li class="'.$class.'">';
             echo '<a href="'.$l['url'].'">';
+
+            if ($params['has_flags']) {
+                echo '<img src="' . $l['country_flag_url'] . '" alt="Flag '. $l['native_name'] .'" class="flag" /> '; 
+            }
+
             $language_name = ($params['full_name'] ? $l['native_name'] : $l['language_code'] );
             echo $language_name;
             echo '</a>';
