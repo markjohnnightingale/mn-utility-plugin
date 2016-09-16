@@ -2,29 +2,27 @@
 /* Custom slider post type. 
  * 
  */
-
 function register_slider_type() {
+    global $mn_config;
     $labels = array(
-    		'name'               => __( 'Slides', 'marknightingale' ),
-    		'singular_name'      => __( 'Slide', 'marknightingale' ),
-    		'menu_name'          => __( 'Slideshow', 'marknightingale' )
-    	);
+            'name'               => __( 'Slides', 'marknightingale' ),
+            'singular_name'      => __( 'Slide', 'marknightingale' ),
+            'menu_name'          => __( 'Slideshow', 'marknightingale' )
+        );
 
-    	$args = array(
-    		'labels'             => $labels,
-    		'public'             => false,
-    		'publicly_queryable' => false,
-    		'show_ui'            => true,
-    		'show_in_nav_menus'  => false,
-    		'rewrite'            => array( 'slug' => 'slide' ),
-    		'capability_type'    => 'post',
-    		'has_archive'        => false,
-    		'hierarchical'       => false,
-    		'supports'           => array( 'title', 'author', 'thumbnail', 'excerpt', 'editor' )
-    	);
-
+        $args = array(
+            'labels'             => $labels,
+            'public'             => false,
+            'publicly_queryable' => false,
+            'show_ui'            => true,
+            'show_in_nav_menus'  => false,
+            'rewrite'            => array( 'slug' => 'slide' ),
+            'capability_type'    => 'post',
+            'has_archive'        => false,
+            'hierarchical'       => false,
+            'supports'           => array( 'title', 'author', 'thumbnail', 'excerpt', 'editor' )
+        );
     	register_post_type( 'slide', $args );
-        
         add_image_size('slider-size', $mn_config['slider']['image_size']['x'], $mn_config['slider']['image_size']['y'], true);
 }
 
