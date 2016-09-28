@@ -12,7 +12,8 @@ $mn_config['active_modules'] = array(
 	'foundation-walker.php',
 	'wpml-appointments.php',
 	'faq.php',
-	'testimonial.php'
+	'testimonial.php',
+	'google-map.php'
 );
 
 $mn_config['include_dir'] = plugin_dir_path( __FILE__ ) . 'includes/';
