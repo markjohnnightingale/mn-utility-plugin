@@ -28,6 +28,14 @@ function mn_build_meta_box( $metabox ) {
             $output .= "<input type='text' name='${field['id']}' id='${field['id']}' class='upload_image' value='$meta' /> ";
             $output .= "<input id='${field['id']}_button' type='button' class='upload_image_button' value=".__('Upload Image', 'marknightingale')." data-target='${field['id']}'/> ";
             $output .= "<span class='description'>${field['desc']}</span>";
+            case 'select':
+            $output .= "<p><label for='${field['id']}'>${field['label']}</label><br>";
+            $output .= "<select name='${field['id']}' id='${field['id']}' >";
+              foreach ($field['options'] as $opt) {
+                $output .= "<option value='${opt['value']}'" . selected( $opt['value'], $meta, false ) . ">${opt['name']}</option>";
+              }
+            $output .= "</select><br>";
+            $output .= "<span class='description'>${field['desc']}</span><br>";
             break;
 
         }
