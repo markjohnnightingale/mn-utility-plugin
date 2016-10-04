@@ -95,125 +95,156 @@ function enqueue_slider_assets() {
 }
 add_action( 'wp_enqueue_scripts', 'enqueue_slider_assets' );
 
-
-
-
-
-/* Build Slideshow 
- * 
- * params $auto_init = true ; $framework String = '' (bootstrap|foundation) ; $slider_options Array = array();
- */
-function mn_slideshow( $auto_init = true, $slider_options = array() ) {
+/**
+ * Build slideshow 
+ * @param  boolean $auto_init      autocall the javascript to start the slideshow
+ * @param  array   $slider_options array of options to be converted to JSON and passed to the .slick() function. If none passed, defaults used.
+ * @param  array   $slider_items   array of items to display in the slider (optional). If no array is provided, the Slider CPT will be used.
+ *                                     Arguments : 
+ *                                     [0] => array(
+ *                                         img_url      => url of the image to use 
+ *                                         img          => id of the wordpress attachment to use (if no URL)
+ *                                         title        => title text for the slide
+ *                                         content      => slide content
+ *                                         slider_url   => URL to apply over the slider as a link
+ *                                         )
+ * @return string                  slider HTML
+ */ 
+function mn_slideshow( $auto_init = true, $slider_options = array(), $slider_items = array() ) {
     global $mn_config;
     $query = new WP_Query(
         array(
             'post_type' => 'slide',
         )
     );
-    
-    $output = '';
-    $i = 1;
-    $output .= '<div class="slick">';
-    if ($query->have_posts() ) {
-        while ($query->have_posts() ) {
-            $query->the_post();
-            
-            $post_meta = get_post_meta( get_the_ID() );
-            
-            $output .= '<div class="slide" id="slick_'. $i .'">';
-            if (has_post_thumbnail()) {
-                $output .= '<div class="slider_image_container">';
 
-                //  If there is a URL add a link over the entire image
-                if ( isset($post_meta['slider_url']) ) {
-                    $output .= '<a href="'.$post_meta['slider_url'][0].'">';
-                }
+    // Populate slider options
+    $slides = array();
+    if (!empty($slider_items)) {
 
-                // $output .= get_the_post_thumbnail(get_the_ID(), "slider-size", array(
-                //     'class' => "slider_image"
-                // ));
+        // If items are passed in params, use
+        $slides = $slider_items;
 
-                // Get slider image URL and display without height / width attributes
-                $image = wp_get_attachment_image_src( get_post_thumbnail_id( get_the_ID() ), 'slider-size' ); 
-
-                if ($image) {
-                    $output .= "<img src=".$image[0]." alt='Slider Image' title='".get_the_title()."' class='slider_image'/>";
-                }
-
-                // Close link if there is a URL
-                if ( isset($post_meta['slider_url']) ) {
-                    $output .= '</a>';
-                }
-                if ( $mn_config['slider']['has_overlay'] == true ) {
-                    // Add image overlay
-                    $output .= '<div class="color_overlay"></div>';
-                }
-                
-                $output .= '</div>'; // end slider_image_container
+        foreach($slides as &$slide) {
+            // Populate img URLs if left empty
+            if ( empty($slide['img_url']) && !empty($slide['img']) ) {
+                $image = wp_get_attachment_image_src( $slide['img'] , 'slider-size' );
+                $slide['img_url'] = $image[0];
             }
-            $output .= '<div class="content"><h3 class="title">';
-            if ( isset($post_meta['slider_url']) ) {
-                $output .= '<a href="'.$post_meta['slider_url'][0].'">';
-            }
-            $output .= get_the_title();
-            if ( isset($post_meta['slider_url']) ) {
-                $output .= '</a>';
-            }
-            $output .= '</h3>';
+            unset($slide['img']);
+        }
+    unset($slide);
+    } else {
 
-            if ( $mn_config['slider']['content_type'] = 'content' ) {
+        // If not, use CPT slides.
+        $slide_posts = get_posts(array(
+            'post_type'     => 'slide',
+            'posts_per_page'     => -1
+        ));
 
-                //Display content
-                $output .= '<div class="full_content">';
-                if ( isset($post_meta['slider_url']) ) {
-                    $output .= '<a href="'.$post_meta['slider_url'][0].'">';
-                }
-                $content = apply_filters( 'the_content', get_the_content() );
+        foreach ($slide_posts as $slide_post ) {
+            // Set fields
+            $slide = array();
+            $image = wp_get_attachment_image_src( get_post_thumbnail_id( $slide_post->ID ), 'slider-size' );
+            $slide['img_url'] = $image[0];
+            $slide['title'] = $slide_post->post_title;
+
+            if ( $mn_config['slider']['content_type'] == 'content' ) {
+                $content = apply_filters( 'the_content', $slide_post->post_content );
                 $content = str_replace( ']]>', ']]&gt;', $content );
-                $output .= $content;
-                if ( isset($post_meta['slider_url']) ) {
-                    $output .= '</a>';
-                }
-                $output .= '</div>';
-
             } else {
-
-                // Display excerpt
-                $output .= '<div class="excerpt">';
-                if ( isset($post_meta['slider_url']) ) {
-                    $output .= '<a href="'.$post_meta['slider_url'][0].'">';
-                }
-                $output .= get_the_excerpt();
-                if ( isset($post_meta['slider_url']) ) {
-                    $output .= '</a>';
-                }
-                $output .= '</div>';
-
+                $content = get_the_excerpt();
             }
-            
-            
-            
-            $output .= '</div></div>';
-            $i++;
+                
+            $slide['content'] = $content;
+            $slide['slider_url'] = get_post_meta( $slide_post->ID, 'slider_url', true );
+
+            array_push($slides, $slide);
+
         }
     }
-    $output .= '</div>';
+
+
+
+    
+    $slider_wrapper = '<div class="slick">%s</div>';
+    // Build slides
+    // 
+    foreach($slides as &$slide) {
+
+        $slide_wrapper = '<div class="slide" id="slick_%d">%s</div>';
+        
+        if ( !empty($slide['img_url']) ) {
+            $slide_image_wrapper = '<div class="slider_image_container">%s</div>';
+            $slide_image = sprintf("<img src='%s' alt='Slider Image' title='%s' class='slider_image'/>", 
+                $slide['img_url'],
+                $slide['title']);
+            if ( !empty($slide['slider_url']) ) {
+                // Add link
+                $slide_image = sprintf('<a href="%s">%s</a>', 
+                    $slide['slider_url'],
+                    $slide_image);
+            }
+            if ( $mn_config['slider']['has_overlay'] == true ) {
+                // Add image overlay
+                $slide_image .= '<div class="color_overlay"></div>';
+            }
+
+            
+            $slide_html = sprintf($slide_image_wrapper, $slide_image);
+        } else {
+            $slide_html = '';
+        }
+
+        $content_wrapper = '<div class="content">%s</div>';
+
+        if ( !empty($slide['title']) ) {
+            $title_text = $slide['title'];
+            if ( isset($slide['slider_url']) ) {
+                $title_text = sprintf('<a href="%s">%s</a>', $slide['url'], $title_text);
+            }
+            $title = sprintf('<h3 class="title">%s</h3>', $title_text);
+        }
+        if ( !empty($slide['content']) ) {
+
+            if ( $mn_config['slider']['content_type'] == 'content' ) {
+                $content_class = 'full_content';
+            } else {
+                $content_class = 'excerpt';
+            }
+
+            $full_content_wrapper = '<div class="%s">%s</div>';
+            $content_text = $slide['content'];
+            if ( isset($slide['slider_url']) ) {
+                $content_text = sprintf('<a href="%s">%s</a>', $slide['url'], $content_text);
+            }
+            $content = sprintf($full_content_wrapper, $content_class, $content_text);
+        }
+
+        $slide_html .= sprintf($content_wrapper, $title . $content); 
+        $slide_html = sprintf($slide_wrapper, $i, $slide_html);
+        
+        $slider_output .= $slide_html;
+
+        $i++;
+    } // End foreach slide
+
+    $slider_output = sprintf($slider_wrapper, $slider_output);
+    
     
     if ($auto_init) {
         // Encode slider options
         $js_options = json_encode($slider_options);
         
         // Add starting script
-        $output .= "<script>
+        $slider_output .= "<script>
             jQuery(document).ready(function($){
                 $('.slick').slick($js_options);
                 })
             </script>";
     }
     
-    
-    wp_reset_query();
-    return $output;
+    return $slider_output;
     
 }
 
