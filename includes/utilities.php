@@ -152,6 +152,21 @@ function icl_get_page_id_by_slug($page_slug) {
     return icl_object_id(get_id_by_slug($page_slug), 'page') ;
     
 }
+/**
+ * Get isotope classes from taxonomy
+ * @param  int $post_id  ID of current post (default get_the_ID() )
+ * @param  string $taxonomy name of the taxonomy (default cat)
+ * @return string           string of classes 
+ */
+function get_isotope_classes( $post_id = null, $taxonomy = 'cat', $prefix = 'iso-' ) {
+    if ($post_id == null) {$post_id = get_the_ID();}
+    $tags = get_the_terms( $post_id, $taxonomy );
+    $isotope_classes = '';
+    foreach($tags as $term) {
+        $isotope_classes .= ' '.$prefix.$term->slug;
+    }
+    return $isotope_classes;
+}
 
 // Allow SVG
 function allow_svg_mime_types( $mimes ){
