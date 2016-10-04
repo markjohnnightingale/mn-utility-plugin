@@ -66,6 +66,16 @@ function getHashFromUrl( url ) {
     }
     
 }
+function getTargetElementStringFromHash( hash ) {
+    var target;
+    if (hash === '#') {
+        target = 'body';
+        return target;
+    } else {
+        target = hash ;
+        return target;
+    }    
+}
 
 
 jQuery(document).ready(function($){
@@ -78,16 +88,26 @@ jQuery(document).ready(function($){
     */
     $('body').on('click', mnConfig.smoothScroll.smoothScrollSelector ,function(){
         if ( $(this).is('a') ) {
-            var $target = $( getHashFromUrl( $(this).attr('href') ) );
+            // If the hash is just '#' scroll to top of page, else scroll to target element.
+            var hash = getHashFromUrl( $(this).attr('href') );
+            var $target = $( getTargetElementStringFromHash( hash ));
+            console.log($target);
         } else if ( $(this).children('a').length === 1 ) {
-            var $target = $( getHashFromUrl( $(this).children('a').attr('href') ) );
+            var hash = getHashFromUrl( $(this).children('a').first().attr('href') );
+            var $target = $( getTargetElementStringFromHash( hash ));
+            console.log($target);
         } else {
+            throw new Error('Smoothscroll: No <a> element detected.');
             return false;
         }
+
         if ($target.length > 0) {
             $target.smoothScroll();
             return false;
         } else {
+            // Element does not exist on this page - 
+            // allow the script to continue as we don't want 
+            // to interrupt navigation.
             return true;
         }
     });
