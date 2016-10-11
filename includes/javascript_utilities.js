@@ -45,10 +45,18 @@ jQuery(window).on('load scroll resize', function(){
       *  
       *************************
     */
-jQuery.fn.smoothScroll = function() {
+jQuery.fn.smoothScroll = function( options ) {
+    options = jQuery.extend({
+        offset: true
+    }, options);
     var $target = jQuery(this);
     var menuBarHeight = mnConfig.smoothScroll.menuBarHeight;
-    var scrollTo = $target.offset().top-menuBarHeight-mnConfig.smoothScroll.marginOfError;
+    var scrollTo;
+    if (options.offset) {
+        scrollTo = $target.offset().top-menuBarHeight-mnConfig.smoothScroll.marginOfError;
+    } else {
+        scrollTo = $target.offset().top-menuBarHeight;
+    }
     jQuery('html,body').animate({ scrollTop: scrollTo }, 800);
     return false;
 }
@@ -91,18 +99,22 @@ jQuery(document).ready(function($){
             // If the hash is just '#' scroll to top of page, else scroll to target element.
             var hash = getHashFromUrl( $(this).attr('href') );
             var $target = $( getTargetElementStringFromHash( hash ));
-            console.log($target);
         } else if ( $(this).children('a').length === 1 ) {
             var hash = getHashFromUrl( $(this).children('a').first().attr('href') );
             var $target = $( getTargetElementStringFromHash( hash ));
-            console.log($target);
         } else {
             throw new Error('Smoothscroll: No <a> element detected.');
             return false;
         }
 
         if ($target.length > 0) {
-            $target.smoothScroll();
+
+            var noOffsetClass = (mnConfig.smoothScroll.smoothScrollSelector+'-no-offset').substring(1);
+            if ($(this).hasClass(noOffsetClass)) {
+                $target.smoothScroll({offset: false});
+            } else {
+                $target.smoothScroll();
+            }
             return false;
         } else {
             // Element does not exist on this page - 
