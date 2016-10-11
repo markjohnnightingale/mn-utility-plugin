@@ -162,8 +162,10 @@ function get_isotope_classes( $post_id = null, $taxonomy = 'cat', $prefix = 'iso
     if ($post_id == null) {$post_id = get_the_ID();}
     $tags = get_the_terms( $post_id, $taxonomy );
     $isotope_classes = '';
-    foreach($tags as $term) {
-        $isotope_classes .= ' '.$prefix.$term->slug;
+    if (!empty($tags)) {
+        foreach($tags as $term) {
+            $isotope_classes .= ' '.$prefix.$term->slug;
+        }
     }
     return $isotope_classes;
 }
