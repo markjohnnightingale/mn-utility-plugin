@@ -12,11 +12,11 @@ function register_room_type() {
 
     	$args = array(
     		'labels'             => $labels,
-    		'public'             => false,
-    		'publicly_queryable' => false,
+    		'public'             => true,
+    		'publicly_queryable' => true,
     		'show_ui'            => true,
     		'show_in_nav_menus'  => false,
-    		'rewrite'            => array( 'slug' => 'room' ),
+    		'rewrite'            => array( 'slug' => 'mystery' ),
     		'capability_type'    => 'post',
     		'has_archive'        => false,
     		'hierarchical'       => false,
