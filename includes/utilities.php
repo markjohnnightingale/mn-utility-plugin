@@ -152,6 +152,15 @@ function icl_get_page_id_by_slug($page_slug) {
     return icl_object_id(get_id_by_slug($page_slug), 'page') ;
     
 }
+
+// Get translated category / term
+function icl_get_term_by_slug( $term_slug, $taxonomy, $id ) {
+    $term = get_term_by( 'slug', $term_slug, $taxonomy );
+    $translated_term_id = icl_object_id( $term->term_id , $taxonomy, $id );
+    $translated_term = get_term( $translated_term_id, $taxonomy );
+    return $translated_term;
+}
+
 /**
  * Get isotope classes from taxonomy
  * @param  int $post_id  ID of current post (default get_the_ID() )
