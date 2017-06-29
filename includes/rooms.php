@@ -15,12 +15,12 @@ function register_room_type() {
     		'public'             => true,
     		'publicly_queryable' => true,
     		'show_ui'            => true,
-    		'show_in_nav_menus'  => false,
+    		'show_in_nav_menus'  => true,
     		'rewrite'            => array( 'slug' => 'mystery' ),
     		'capability_type'    => 'post',
     		'has_archive'        => false,
     		'hierarchical'       => false,
-    		'supports'           => array( 'title', 'author', 'thumbnail', 'editor', 'excerpt', 'page-attributes' )
+    		'supports'           => array( 'title', 'author', 'thumbnail', 'editor', 'excerpt', 'page-attributes', 'custom-fields' )
     	);
 
     	register_post_type( 'room', $args );
