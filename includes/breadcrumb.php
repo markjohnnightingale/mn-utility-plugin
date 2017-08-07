@@ -8,7 +8,7 @@
  */
 
 function mn_breadcrumb( $framework = '' ) {
-    if ($framework = 'bootstrap') { ?>
+    if ($framework == 'bootstrap') : ?>
         <ol class="breadcrumb">
             <li class="<?php if (is_front_page()) { echo 'active'; }?>"><a href="<?php echo site_url();?>"><?php _e('Home', 'marknightingale');?></a></li>
             <?php if (!is_front_page()) :?>
@@ -57,10 +57,66 @@ function mn_breadcrumb( $framework = '' ) {
                     <li class="active"><?php echo __('Search Results', 'marknightingale') ;?></li>
                 <?php endif;?> 
         
-        
+            
             <?php endif;?>
         </ol>
-   <?php }
+
+    <?php elseif( $framework == 'foundation' ) : ?>
+        <nav class="mn_breadcrumb" aria-label="You are here:" role="navigation">
+            <ul class="breadcrumbs">
+                
+                <li><a href="<?php echo site_url();?>"><?php _e('Home', 'marknightingale');?></a></li>
+                <?php if (!is_front_page()) :?>
+            
+                    <?php if (is_category()) : ?>
+               
+                        <li><?php single_cat_title( '', true ); ?></li>
+                
+                    <?php elseif (is_single() || is_page()) : ?>
+                
+                        <?php if (is_single() && has_category()) :?>
+                            <?php $cat = get_the_category(); ?>
+                            <li><?php $parents_string = get_category_parents( $cat[0], true, '</li><li>' ); 
+                                $parents_string = substr($parents_string, 0, -9);
+                                echo $parents_string;
+                                ?></li>
+                        <?php elseif(is_page()):?>
+                    
+                            <?php 
+                            $ancestors = get_post_ancestors(get_the_ID());
+                            if (!empty( $ancestors )) {
+                                $ancestors = array_reverse($ancestors);
+                                $output = '';
+                                foreach ($ancestors as $post_id) {
+                                    $output .= '<li><a href="'.get_the_permalink($post_id).'">'.get_the_title($post_id).'</a></li>';
+                                    
+                                }
+                                echo $output;
+                            } ?>
+                    
+                        <?php endif;?>
+                
+                        <li><?php echo truncate(get_the_title()) ;?></li>
+
+                    <?php elseif (is_tag()) : ?>
+                        <li><?php single_tag_title( '', true ); ?></li>
+                    <?php elseif (is_day()) :?>
+                        <li><?php echo __('Archive for', 'marknightingale').' '.get_the_time('j F Y') ;?></li>
+                    <?php elseif (is_month()) :?>
+                        <li><?php echo __('Archive for', 'marknightingale').' '.get_the_time('F Y') ;?></li>
+                    <?php elseif (is_year()) :?>
+                        <li><?php echo __('Archive for', 'marknightingale').' '.get_the_time('Y') ;?></li>
+                    <?php elseif (isset($_GET['paged']) && !empty($_GET['paged'])) :?>
+                        <li><?php echo __('News Archives', 'marknightingale') ;?></li>
+                    <?php elseif (is_search()) :?>
+                        <li><?php echo __('Search Results', 'marknightingale') ;?></li>
+                    <?php endif;?> 
+            
+                
+                <?php endif;?>
+            </ul>
+        </nav>
+   <?php endif; 
     
 }
 
