@@ -83,10 +83,11 @@ function mn_save_meta_data( $post_id, $post, $metabox ) {
  * 
  */
 
-function my_admin_scripts() {    
+function my_admin_scripts() {
     wp_enqueue_script('media-upload');
     wp_enqueue_script('thickbox');
-    wp_register_script('uploader-js', get_stylesheet_directory_uri().'/js/uploader.js', array('jquery'));
+
+    wp_register_script('uploader-js',  plugin_dir_url( __FILE__ )  .'../vendor/uploader.js', array('jquery'));
     wp_enqueue_script('uploader-js');
 }
 
